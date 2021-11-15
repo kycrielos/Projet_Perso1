@@ -117,10 +117,13 @@ public class GridScript : MonoBehaviour
 		{
 			foreach (Node n in grid)
 			{
-				n.nodeObj.GetComponent<MeshRenderer>().material.color = (n.groundstate == GroundState.possible) ? Color.green : Color.red;
+				n.nodeObj.GetComponent<MeshRenderer>().material.color = (n.groundstate == GroundState.possible) ? Color.green : Color.gray;
 				if (path != null && !distanceChecking)
 					if (path.Contains(n))
-						n.nodeObj.GetComponent<MeshRenderer>().material.color = Color.gray;
+						if (GameManager.Instance.actualPlayerState == GameManager.PlayerState.idle || GameManager.Instance.actualPlayerState == GameManager.PlayerState.isMoving)
+							n.nodeObj.GetComponent<MeshRenderer>().material.color = new Color32(252,185,65,1);
+				if (n.isTarget)
+						n.nodeObj.GetComponent<MeshRenderer>().material.color = new Color32(252, 185, 65, 1);
 			}
 		}
 	}

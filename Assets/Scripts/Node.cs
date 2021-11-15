@@ -12,6 +12,7 @@ public class Node
 	public int gCost;
 	public int hCost;
 	public Node parent;
+	public bool isTarget;
 
 	public Node(GroundState _groundstate, Vector3 _worldPos, int _gridX, int _gridY, GameObject _nodeObj)
 	{

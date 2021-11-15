@@ -13,7 +13,6 @@ public class AttackScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerStats = GetComponent<PersonnageBase>();
     }
 
     public void Attack(PersonnageScript targetScript)

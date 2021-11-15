@@ -12,6 +12,10 @@ public class ClickDetector : MonoBehaviour
 
     Vector3 clickedObjectPosition;
 
+    public LayerMask mask;
+
+    Node clickedObjNode;
+
     private void Start()
     {
         playerAttack = player.GetComponent<AttackScript>();
@@ -34,11 +38,12 @@ public class ClickDetector : MonoBehaviour
                 }
                 break;
             case GameManager.PlayerState.isTargeting:
-                if (GetClickedGameObject() != null)
+                if (GetClickedGameObject() != null )
                 {
-                    if (targetCheck())
+                    if (targetCheck() && Input.GetMouseButtonDown(0))
                     {
-
+                        clickedObjNode.isTarget = false;
+                        GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
                     }
                 }
                 break;
@@ -47,18 +52,30 @@ public class ClickDetector : MonoBehaviour
 
     bool targetCheck()
     {
-        Node clickedObjNode = grid.NodeFromWorldPoint(GetClickedGameObject().transform.position);
+        if (clickedObjNode != null)
+        {
+            clickedObjNode.isTarget = false;
+        }
+        clickedObjNode = grid.NodeFromWorldPoint(GetClickedGameObject().transform.position);
         Node playerNode = grid.NodeFromWorldPoint(player.transform.position);
-       
-        int actualRange = Mathf.Abs(clickedObjNode.gridX - playerNode.gridX) + Mathf.Abs(clickedObjNode.gridY - playerNode.gridY);
 
-        if (actualRange > playerAttack.chosenMove.Range || actualRange < playerAttack.chosenMove.MinimumRange)
+        if (clickedObjNode.groundstate == GroundState.nothing || clickedObjNode.groundstate == GroundState.wall)
         {
             return false;
         }
-        else
+
+        clickedObjNode.isTarget = true;
+
+
+        int actualRange = Mathf.Abs(clickedObjNode.gridX - playerNode.gridX) + Mathf.Abs(clickedObjNode.gridY - playerNode.gridY);
+
+        if (actualRange <= playerAttack.chosenMove.Range && actualRange >= playerAttack.chosenMove.MinimumRange)
         {
             return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -91,7 +108,7 @@ public class ClickDetector : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
         {
             return hit.transform.gameObject;
         }
@@ -100,4 +117,14 @@ public class ClickDetector : MonoBehaviour
             return null;
         }
     }
+
+    public void UIMoveClick(MoveBase move)
+    {
+        if (GameManager.Instance.actualPlayerState == GameManager.PlayerState.idle)
+        {
+            playerAttack.chosenMove = move;
+            GameManager.Instance.actualPlayerState = GameManager.PlayerState.isTargeting;
+        }
+    }
 }
+

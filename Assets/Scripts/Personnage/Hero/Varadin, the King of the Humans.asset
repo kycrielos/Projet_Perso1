@@ -24,4 +24,8 @@ MonoBehaviour:
   speDef: 100
   movementPoint: 6
   actionPoint: 10
+  bonusPhysicalDamageFix: 0
+  bonusSpecialDamageFix: 0
+  bonusPhysicalResistanceFix: 0
+  bonusSpecialResistanceFix: 0
   learnableMoves: []

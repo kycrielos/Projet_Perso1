@@ -11,7 +11,7 @@ public class PersonnageScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        personnage = GetComponent<PersonnageBase>();
+
     }
 
     // Update is called once per frame
