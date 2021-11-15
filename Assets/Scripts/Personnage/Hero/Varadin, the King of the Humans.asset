@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c83ee216b191504da80c10e6009e3ea, type: 3}
+  m_Name: Varadin, the King of the Humans
+  m_EditorClassIdentifier: 
+  personnageName: Varadin, the King of the Humans
+  description: 
+  personnageRace1: 0
+  personnageRace2: 10
+  personnagePowerType: 6
+  maxHp: 120
+  atk: 160
+  speAtk: 0
+  def: 140
+  speDef: 100
+  movementPoint: 6
+  actionPoint: 10
+  learnableMoves: []
