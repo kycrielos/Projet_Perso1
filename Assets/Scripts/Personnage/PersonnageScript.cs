@@ -6,18 +6,37 @@ public class PersonnageScript : MonoBehaviour
 {
     public PersonnageBase personnage;
 
+    public int actualActionPoint;
+    public int actualMovementPoint;
+
     public float physicalDamage;
     public float specialDamage;
+
+    public bool playerturn;
     // Start is called before the first frame update
     void Start()
     {
-
+        actualActionPoint = personnage.ActionPoint;
+        actualMovementPoint = personnage.MovementPoint;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void StartTurn()
+    {
+        playerturn = true;
+    }
+
+    public void EndTurn()
+    {
+        actualActionPoint = personnage.ActionPoint;
+        actualMovementPoint = personnage.MovementPoint;
+        playerturn = false;
+        GameManager.Instance.NextPlayerTurn();
     }
 
     public void Damaged()

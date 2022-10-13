@@ -6,6 +6,8 @@ public class ClickDetector : MonoBehaviour
     public GridScript grid;
     public GameObject player;
 
+    public PersonnageScript playerScript;
+
     AttackScript playerAttack;
 
     public float speed;
@@ -19,34 +21,38 @@ public class ClickDetector : MonoBehaviour
     private void Start()
     {
         playerAttack = player.GetComponent<AttackScript>();
+        playerScript = player.GetComponent<PersonnageScript>();
     }
 
     void Update()
     {
-        switch (GameManager.Instance.actualPlayerState)
+        if (playerScript.playerturn)
         {
-            case GameManager.PlayerState.idle:
-                if (GetClickedGameObject() != null)
-                {
-                    clickedObjectPosition = GetClickedGameObject().transform.position;
-                    pathfinder.target = GetClickedGameObject().transform;
-                    if (Input.GetMouseButtonDown(0) && PathCheck())
+            switch (GameManager.Instance.actualPlayerState)
+            {
+                case GameManager.PlayerState.idle:
+                    if (GetClickedGameObject() != null)
                     {
-                        GameManager.Instance.actualPlayerState = GameManager.PlayerState.isMoving;
-                        StartCoroutine(MovePlayer());
+                        clickedObjectPosition = GetClickedGameObject().transform.position;
+                        pathfinder.target = GetClickedGameObject().transform;
+                        if (Input.GetMouseButtonDown(0) && PathCheck())
+                        {
+                            GameManager.Instance.actualPlayerState = GameManager.PlayerState.isMoving;
+                            StartCoroutine(MovePlayer());
+                        }
                     }
-                }
-                break;
-            case GameManager.PlayerState.isTargeting:
-                if (GetClickedGameObject() != null )
-                {
-                    if (targetCheck() && Input.GetMouseButtonDown(0))
+                    break;
+                case GameManager.PlayerState.isTargeting:
+                    if (GetClickedGameObject() != null)
                     {
-                        clickedObjNode.isTarget = false;
-                        GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
+                        if (targetCheck() && Input.GetMouseButtonDown(0))
+                        {
+                            clickedObjNode.isTarget = false;
+                            GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
+                        }
                     }
-                }
-                break;
+                    break;
+            }
         }
     }
 
@@ -83,6 +89,7 @@ public class ClickDetector : MonoBehaviour
     {
         foreach (Node n in grid.path)
         {
+            player.GetComponent<PersonnageScript>().actualMovementPoint -= 1;
             while (Vector3.Distance(player.transform.position, n.nodeObj.transform.position) > 0.05f)
             {
                 float step = speed * Time.deltaTime;

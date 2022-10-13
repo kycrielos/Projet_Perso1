@@ -137,7 +137,7 @@ public class GridScript : MonoBehaviour
     {
 		pathfinder.target  = n.nodeObj.transform;
 		pathfinder.FindPath(player.transform.position, n.nodeObj.transform.position);
-		return (path.Count > playerscript.personnage.MovementPoint);
+		return (path.Count > playerscript.actualMovementPoint);
 	}
 
 

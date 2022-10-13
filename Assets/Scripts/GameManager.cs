@@ -22,6 +22,10 @@ public class GameManager : Singleton<GameManager>
     public int playingPersonnage;
     public PlayerState actualPlayerState;
 
+    public List<PersonnageScript> playerOrder = new List<PersonnageScript>();
+    public int turnCount;
+    int actualPlayer;
+
     public enum PlayerState
     {
         idle,
@@ -41,5 +45,19 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         
+    }
+
+    public void NextPlayerTurn()
+    {
+        if (actualPlayer <= playerOrder.Count)
+        {
+            actualPlayer++;
+        }
+        else
+        {
+            turnCount++;
+            actualPlayer = 0;
+        }
+        playerOrder[actualPlayer].StartTurn();
     }
 }
