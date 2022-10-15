@@ -6,12 +6,6 @@ public class PathFinding : MonoBehaviour
 {
 
 	public Transform seeker, target;
-	GridScript grid;
-
-	void Awake()
-	{
-		grid = GetComponent<GridScript>();
-	}
 
 	void Update()
 	{
@@ -20,8 +14,8 @@ public class PathFinding : MonoBehaviour
 
 	public void FindPath(Vector3 startPos, Vector3 targetPos)
 	{
-		Node startNode = grid.NodeFromWorldPoint(startPos);
-		Node targetNode = grid.NodeFromWorldPoint(targetPos);
+		Node startNode = GridManager.Instance.NodeFromWorldPoint(startPos);
+		Node targetNode = GridManager.Instance.NodeFromWorldPoint(targetPos);
 
 		List<Node> openSet = new List<Node>();
 		HashSet<Node> closedSet = new HashSet<Node>();
@@ -49,7 +43,7 @@ public class PathFinding : MonoBehaviour
 			openSet.Remove(node);
 			closedSet.Add(node);
 
-			foreach (Node neighbour in grid.GetNeighbours(node))
+			foreach (Node neighbour in GridManager.Instance.GetNeighbours(node))
 			{
 				if (neighbour.groundstate != GroundState.possible || closedSet.Contains(neighbour))
 				{
@@ -82,7 +76,7 @@ public class PathFinding : MonoBehaviour
 		}
 		path.Reverse();
 
-		grid.path = path;
+		GridManager.Instance.path = path;
 
 	}
 

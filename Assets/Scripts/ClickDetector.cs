@@ -3,7 +3,6 @@ using System.Collections;
 public class ClickDetector : MonoBehaviour
 {
     public PathFinding pathfinder;
-    public GridScript grid;
     public GameObject player;
 
     public PersonnageScript playerScript;
@@ -62,8 +61,8 @@ public class ClickDetector : MonoBehaviour
         {
             clickedObjNode.isTarget = false;
         }
-        clickedObjNode = grid.NodeFromWorldPoint(GetClickedGameObject().transform.position);
-        Node playerNode = grid.NodeFromWorldPoint(player.transform.position);
+        clickedObjNode = GridManager.Instance.NodeFromWorldPoint(GetClickedGameObject().transform.position);
+        Node playerNode = GridManager.Instance.NodeFromWorldPoint(player.transform.position);
 
         if (clickedObjNode.groundstate == GroundState.nothing || clickedObjNode.groundstate == GroundState.wall)
         {
@@ -87,7 +86,7 @@ public class ClickDetector : MonoBehaviour
 
     IEnumerator MovePlayer()
     {
-        foreach (Node n in grid.path)
+        foreach (Node n in GridManager.Instance.path)
         {
             player.GetComponent<PersonnageScript>().actualMovementPoint -= 1;
             while (Vector3.Distance(player.transform.position, n.nodeObj.transform.position) > 0.05f)
@@ -98,13 +97,13 @@ public class ClickDetector : MonoBehaviour
             }
         }
         GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
-        grid.CheckWalkable();
+        GridManager.Instance.CheckWalkable();
     }
 
 
     bool PathCheck()
     {
-        if (grid.grid[(int)(clickedObjectPosition.x + grid.gridSizexCoeff), (int)(clickedObjectPosition.z + grid.gridSizeyCoeff)].groundstate == GroundState.possible)
+        if (GridManager.Instance.grid[(int)(clickedObjectPosition.x + GridManager.Instance.gridSizexCoeff), (int)(clickedObjectPosition.z + GridManager.Instance.gridSizeyCoeff)].groundstate == GroundState.possible)
         {
             return true;
         }

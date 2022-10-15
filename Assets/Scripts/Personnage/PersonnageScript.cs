@@ -18,6 +18,7 @@ public class PersonnageScript : MonoBehaviour
     {
         actualActionPoint = personnage.ActionPoint;
         actualMovementPoint = personnage.MovementPoint;
+        GameManager.Instance.playerOrder.Add(gameObject);
     }
 
     // Update is called once per frame
@@ -29,6 +30,7 @@ public class PersonnageScript : MonoBehaviour
     public void StartTurn()
     {
         playerturn = true;
+        GridManager.Instance.CheckWalkable();
     }
 
     public void EndTurn()
