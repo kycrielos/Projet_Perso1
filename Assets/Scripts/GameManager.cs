@@ -82,8 +82,6 @@ public class GridManager : Singleton<GridManager>
 
     GroundState _groundtstate;
 
-    public PathFinding pathfinder;
-
 
     public void CreateGrid()
     {
@@ -181,8 +179,8 @@ public class GridManager : Singleton<GridManager>
 
     bool MaxDistanceCheck(Node n)
     {
-        pathfinder.target = n.nodeObj.transform;
-        pathfinder.FindPath(GameManager.Instance.ActualPlayer.transform.position, n.nodeObj.transform.position);
+        PathFinding.Instance.target = n.nodeObj.transform;
+        PathFinding.Instance.FindPath(GameManager.Instance.ActualPlayer.transform.position, n.nodeObj.transform.position);
         return (path.Count > GameManager.Instance.ActualPlayerScript.actualMovementPoint);
     }
     public void CheckWalkable()
@@ -230,4 +228,5 @@ public class GridManager : Singleton<GridManager>
         distanceChecking = false;
     }
 }
+
 

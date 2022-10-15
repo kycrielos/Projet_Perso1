@@ -2,14 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PathFinding : MonoBehaviour
+public class PathFinding : Singleton<PathFinding>
 {
-
-	public Transform seeker, target;
+	public Transform target;
 
 	void Update()
 	{
-		FindPath(seeker.position, target.position);
+		FindPath(GameManager.Instance.ActualPlayer.transform.position, target.position);
 	}
 
 	public void FindPath(Vector3 startPos, Vector3 targetPos)

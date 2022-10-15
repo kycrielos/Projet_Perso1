@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GridScript : MonoBehaviour
+public class GridData : MonoBehaviour
 {
 	public LayerMask unwalkableMask;
 	public LayerMask playerMask;
@@ -31,7 +31,6 @@ public class GridScript : MonoBehaviour
 		GridManager.Instance.gridSizexCoeff = gridSizexCoeff;
 		GridManager.Instance.gridSizeyCoeff = gridSizeyCoeff;
 		GridManager.Instance.gridObjPrefab = gridObjPrefab;
-		GridManager.Instance.pathfinder = GetComponent<PathFinding>();
 
 	}
     private void Start()

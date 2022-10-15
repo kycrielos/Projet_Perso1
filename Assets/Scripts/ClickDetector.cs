@@ -2,7 +2,6 @@
 using System.Collections;
 public class ClickDetector : MonoBehaviour
 {
-    public PathFinding pathfinder;
     public GameObject player;
 
     public PersonnageScript playerScript;
@@ -33,7 +32,7 @@ public class ClickDetector : MonoBehaviour
                     if (GetClickedGameObject() != null)
                     {
                         clickedObjectPosition = GetClickedGameObject().transform.position;
-                        pathfinder.target = GetClickedGameObject().transform;
+                        PathFinding.Instance.target = GetClickedGameObject().transform;
                         if (Input.GetMouseButtonDown(0) && PathCheck())
                         {
                             GameManager.Instance.actualPlayerState = GameManager.PlayerState.isMoving;
