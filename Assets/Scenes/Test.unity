@@ -647,6 +647,7 @@ MonoBehaviour:
   physicalDamage: 0
   specialDamage: 0
   playerturn: 1
+  attachedBuffs: []
 --- !u!114 &1071324505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,7 +789,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46547ae029bf0845803b8cb4bdbbd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathfinder: {fileID: 2111471343}
   player: {fileID: 1071324499}
   playerScript: {fileID: 0}
   speed: 5
@@ -1421,7 +1421,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2111471345}
   - component: {fileID: 2111471344}
-  - component: {fileID: 2111471343}
   m_Layer: 0
   m_Name: A*
   m_TagString: Untagged
@@ -1429,20 +1428,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2111471343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111471342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 535b396bd3e1d4648aa2fa62e2de7450, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seeker: {fileID: 1071324503}
-  target: {fileID: 1071324503}
 --- !u!114 &2111471344
 MonoBehaviour:
   m_ObjectHideFlags: 0

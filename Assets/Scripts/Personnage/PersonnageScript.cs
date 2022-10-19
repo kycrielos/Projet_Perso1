@@ -13,18 +13,14 @@ public class PersonnageScript : MonoBehaviour
     public float specialDamage;
 
     public bool playerturn;
+
+    public List<BuffBase> attachedBuffs = new List<BuffBase>();
     // Start is called before the first frame update
     void Start()
     {
         actualActionPoint = personnage.ActionPoint;
         actualMovementPoint = personnage.MovementPoint;
         GameManager.Instance.playerOrder.Add(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void StartTurn()
