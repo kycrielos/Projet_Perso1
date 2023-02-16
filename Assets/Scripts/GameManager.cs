@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager>
     public int turnCount;
     int actualPlayerIndex;
 
+    //get the playing character
     public GameObject ActualPlayer
     {
         get {if (playerOrder.Count != 0){ return playerOrder[actualPlayerIndex];}
@@ -33,6 +34,8 @@ public class GameManager : Singleton<GameManager>
             }
     }
 
+
+    //get the playing character script
     public PersonnageScript ActualPlayerScript
     {
         get { if (ActualPlayer != null) { return ActualPlayer.GetComponent<PersonnageScript>(); }
@@ -48,6 +51,7 @@ public class GameManager : Singleton<GameManager>
         isDying,
     }
 
+    //when called skip to the next character turn
     public void NextPlayerTurn()
     {
         if (actualPlayerIndex < playerOrder.Count -1)
@@ -211,6 +215,7 @@ public class GridManager : Singleton<GridManager>
 
 public class MovementManager : Singleton<MovementManager>
 {
+    //Move the player throught the path node per node
     public IEnumerator MovePersonnage(GameObject personnage, float speed)
     {
         foreach (Node n in GridManager.Instance.path)
@@ -227,6 +232,7 @@ public class MovementManager : Singleton<MovementManager>
         GridManager.Instance.UpdateGridState();
     }
 
+    //Check if the target node is valid for movement
     public bool PathCheck(Vector3 objectPosition)
     {
         if (GridManager.Instance.grid[(int)(objectPosition.x + GridManager.Instance.gridSizexCoeff), (int)(objectPosition.z + GridManager.Instance.gridSizeyCoeff)].GroundState == GroundStateEnum.possible)

@@ -11,6 +11,7 @@ public class Node
         {
 			groundState = value;
 
+			//everytime the state change change the color too
 			if (groundState == GroundStateEnum.wall || groundState == GroundStateEnum.nothing)
 			{
 				nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
@@ -27,8 +28,10 @@ public class Node
 	public int gridX;
 	public int gridY;
 
-	public int gCost;
-	public int hCost;
+	public int gCost; //distance from the starting node (used in the pathfinder)
+	public int hCost; //distance from the ending node (used in the pathfinder)
+
+
 	public Node parent;
 
 	private bool isTarget;
@@ -38,7 +41,16 @@ public class Node
 		set
 		{
 			isTarget = value;
-			nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.gray;
+
+			//if the square is targeted change its color
+			if (groundState == GroundStateEnum.possible)
+			{
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.green;
+			}
+			else if(groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
+			{
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.gray;
+			}
 		}
 	}
 
@@ -49,11 +61,14 @@ public class Node
 		set
 		{
 			isInPath = value;
+
+			//if the square is in the path change its color
 			if (groundState == GroundStateEnum.possible)
 				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.green;
 		}
 	}
 
+	//I forgot why it's like this and i'm to scared to try to change it
 	public Node(GroundStateEnum _groundstate, Vector3 _worldPos, int _gridX, int _gridY, GameObject _nodeObj)
 	{
 		nodeObj = _nodeObj;
@@ -63,7 +78,7 @@ public class Node
 		gridY = _gridY;
 	}
 
-	public int fCost
+	public int fCost // total cost (used in the pathfinder)
 	{
 		get
 		{

@@ -10,8 +10,6 @@ public class ClickDetector : MonoBehaviour
 
     public float speed;
 
-    Vector3 clickedObjectPosition;
-
     public LayerMask mask;
 
     Node clickedObjNode;
@@ -28,24 +26,40 @@ public class ClickDetector : MonoBehaviour
         {
             switch (GameManager.Instance.actualPlayerState)
             {
-                case GameManager.PlayerState.idle:
-                    if (GetClickedGameObject() != null)
+                //if the player is in idle it will check for the movement possibilities
+                case GameManager.PlayerState.idle:   
+                    if (GetClickedGameObject() != null) //safety (called after the case to minimise runtime)
                     {
-                        clickedObjectPosition = GetClickedGameObject().transform.position;
+                        //setup the pathfinding
                         PathFinding.Instance.target = GetClickedGameObject().transform;
-                        if (Input.GetMouseButtonDown(0) && MovementManager.Instance.PathCheck(clickedObjectPosition))
+
+                        //Start the player movement coroutine if the player click on a valid node
+                        if (Input.GetMouseButtonDown(0) && MovementManager.Instance.PathCheck(GetClickedGameObject().transform.position))
                         {
                             GameManager.Instance.actualPlayerState = GameManager.PlayerState.isMoving;
                             StartCoroutine(MovementManager.Instance.MovePersonnage(player, speed));
                         }
                     }
                     break;
-                case GameManager.PlayerState.isTargeting:
-                    if (GetClickedGameObject() != null)
+
+                //if the player is targeting something with a move it will check for the available target
+                case GameManager.PlayerState.isTargeting:                   
+                    if (GetClickedGameObject() != null) //safety (called after the case to minimise runtime)
                     {
-                        if (targetCheck() && Input.GetMouseButtonDown(0))
+                        //set the last target node to false
+                        if (clickedObjNode != null)
                         {
-                            if (clickedObjNode.GroundState == GroundStateEnum.player)
+                            clickedObjNode.IsTarget = false;
+                        }
+
+                        //get the new target node
+                        clickedObjNode = GridManager.Instance.NodeFromWorldPoint(GetClickedGameObject().transform.position);
+                        clickedObjNode.IsTarget = true;
+
+                        //Check if the player click on a valid node if not return the player to idle
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            if (targetCheck())
                             {
 
                             }
@@ -63,24 +77,33 @@ public class ClickDetector : MonoBehaviour
 
     bool targetCheck()
     {
-        if (clickedObjNode != null)
-        {
-            clickedObjNode.IsTarget = false;
-        }
-        clickedObjNode = GridManager.Instance.NodeFromWorldPoint(GetClickedGameObject().transform.position);
-
+        //return false if the node can't be a target at all
         if (clickedObjNode.GroundState == GroundStateEnum.nothing || clickedObjNode.GroundState == GroundStateEnum.wall)
         {
             return false;
         }
 
-        Node playerNode = GridManager.Instance.NodeFromWorldPoint(player.transform.position);
+        // return false if the  node can't be a target for the player actual attack
+        switch (playerAttack.chosenMove.TargetingType) //0 = everything can be target, 1 = square with a target on it only, 2 = empty square only
+        {
+            case 1:
+                if (clickedObjNode.GroundState != GroundStateEnum.player)
+                {
+                    return false;
+                }
+                break;
+            case 2:
+                if (clickedObjNode.GroundState == GroundStateEnum.player)
+                {
+                    return false;
+                }
+                break;
+        }
 
-        clickedObjNode.IsTarget = true;
+        Node playerNode = GridManager.Instance.NodeFromWorldPoint(player.transform.position); //get player Node
 
-
+        //Attack maximum range calcul
         int actualRange = Mathf.Abs(clickedObjNode.gridX - playerNode.gridX) + Mathf.Abs(clickedObjNode.gridY - playerNode.gridY);
-
         if (actualRange <= playerAttack.chosenMove.Range && actualRange >= playerAttack.chosenMove.MinimumRange)
         {
             return true;
@@ -92,6 +115,7 @@ public class ClickDetector : MonoBehaviour
     }
 
 
+    //Use a Raycast from the mouse to get the target node
     GameObject GetClickedGameObject() 
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -106,6 +130,7 @@ public class ClickDetector : MonoBehaviour
         }
     }
 
+    //Call with a UI Button to start the attack (shouldn't be in this class, have to be changed)
     public void UIMoveClick(MoveBase move)
     {
         if (GameManager.Instance.actualPlayerState == GameManager.PlayerState.idle)

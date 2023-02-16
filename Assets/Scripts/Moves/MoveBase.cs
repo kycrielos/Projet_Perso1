@@ -17,6 +17,8 @@ public class MoveBase : ScriptableObject
     [SerializeField] int cost;
     
     [SerializeField] bool lineOfSight;
+
+    [Tooltip("0 = everything can be target, 1 = square with a target on it only, 2 = empty square only")]
     [SerializeField] int targetingType;
     [SerializeField] float ratio;
     [SerializeField] bool isPhysical;

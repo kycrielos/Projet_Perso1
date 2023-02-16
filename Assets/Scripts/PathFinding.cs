@@ -15,9 +15,11 @@ public class PathFinding : Singleton<PathFinding>
 		}
 	}
 
+	//Will find the shortest path between 2 nodes
 	public void FindPath(Vector3 startPos, Vector3 targetPos)
 	{
-		if (path != null)
+		//Update the last path state
+		if (path != null) //safety
 		{
 			foreach (Node n in path)
 			{
@@ -25,17 +27,22 @@ public class PathFinding : Singleton<PathFinding>
 			}
 		}
 
+		//Set up
 		Node startNode = GridManager.Instance.NodeFromWorldPoint(startPos);
 		Node targetNode = GridManager.Instance.NodeFromWorldPoint(targetPos);
-
 		List<Node> openSet = new List<Node>();
 		HashSet<Node> closedSet = new HashSet<Node>();
+		
+		//A* Algorithm :
+
 		openSet.Add(startNode);
 
 		while (openSet.Count > 0)
 		{
+			//check the next node waiting in the open list
 			Node node = openSet[0];
 
+			//test if any node in open list have a lowest cost, so it check the one with the lowest cost before the others
 			for (int i = 1; i < openSet.Count; i++)
 			{
 				if (openSet[i].fCost < node.fCost || openSet[i].fCost == node.fCost)
@@ -45,6 +52,7 @@ public class PathFinding : Singleton<PathFinding>
 				}
 			}
 
+			//end if the target has been found
 			if (node == targetNode)
 			{
 				RetracePath(startNode, targetNode);
@@ -53,19 +61,22 @@ public class PathFinding : Singleton<PathFinding>
 
 			openSet.Remove(node);
 			closedSet.Add(node);
-			node.IsInpath = false;
 
 			foreach (Node neighbour in GridManager.Instance.GetNeighbours(node))
 			{
+				//if the adjacent cell is unwalkable or the adjacent cell is in closed list skip to the next adjacent cell
 				if (neighbour.GroundState != GroundStateEnum.possible || closedSet.Contains(neighbour))
 				{
 					continue;
 				}
 
-				int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
-				if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+				//calcul the new path cost
+				int newMovementCostToNeighbour = node.gCost + GetDistance(node, neighbour);
+
+				//if the new path to adjacent cell is shorter or adjacent cell is not in the open list : set the cost and if it is not in it add to open list 
+				if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
 				{
-					neighbour.gCost = newCostToNeighbour;
+					neighbour.gCost = newMovementCostToNeighbour;
 					neighbour.hCost = GetDistance(neighbour, targetNode);
 					neighbour.parent = node;
 
@@ -76,6 +87,7 @@ public class PathFinding : Singleton<PathFinding>
 		}
 	}
 
+	//Track back the path
 	void RetracePath(Node startNode, Node endNode)
 	{
 		path = new List<Node>();
@@ -90,7 +102,6 @@ public class PathFinding : Singleton<PathFinding>
 		path.Reverse();
 
 		GridManager.Instance.path = path;
-
 	}
 
 	int GetDistance(Node nodeA, Node nodeB)
