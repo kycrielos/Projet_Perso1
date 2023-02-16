@@ -26,7 +26,7 @@ public class PersonnageScript : MonoBehaviour
     public void StartTurn()
     {
         playerturn = true;
-        GridManager.Instance.CheckWalkable();
+        GridManager.Instance.UpdateGridState();
     }
 
     public void EndTurn()

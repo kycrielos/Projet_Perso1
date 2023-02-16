@@ -33,10 +33,10 @@ public class ClickDetector : MonoBehaviour
                     {
                         clickedObjectPosition = GetClickedGameObject().transform.position;
                         PathFinding.Instance.target = GetClickedGameObject().transform;
-                        if (Input.GetMouseButtonDown(0) && PathCheck())
+                        if (Input.GetMouseButtonDown(0) && MovementManager.Instance.PathCheck(clickedObjectPosition))
                         {
                             GameManager.Instance.actualPlayerState = GameManager.PlayerState.isMoving;
-                            StartCoroutine(MovePlayer());
+                            StartCoroutine(MovementManager.Instance.MovePersonnage(player, speed));
                         }
                     }
                     break;
@@ -45,8 +45,15 @@ public class ClickDetector : MonoBehaviour
                     {
                         if (targetCheck() && Input.GetMouseButtonDown(0))
                         {
-                            clickedObjNode.isTarget = false;
-                            GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
+                            if (clickedObjNode.GroundState == GroundStateEnum.player)
+                            {
+
+                            }
+                            else
+                            {
+                                clickedObjNode.IsTarget = false;
+                                GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
+                            }
                         }
                     }
                     break;
@@ -58,17 +65,18 @@ public class ClickDetector : MonoBehaviour
     {
         if (clickedObjNode != null)
         {
-            clickedObjNode.isTarget = false;
+            clickedObjNode.IsTarget = false;
         }
         clickedObjNode = GridManager.Instance.NodeFromWorldPoint(GetClickedGameObject().transform.position);
-        Node playerNode = GridManager.Instance.NodeFromWorldPoint(player.transform.position);
 
-        if (clickedObjNode.groundstate == GroundState.nothing || clickedObjNode.groundstate == GroundState.wall)
+        if (clickedObjNode.GroundState == GroundStateEnum.nothing || clickedObjNode.GroundState == GroundStateEnum.wall)
         {
             return false;
         }
 
-        clickedObjNode.isTarget = true;
+        Node playerNode = GridManager.Instance.NodeFromWorldPoint(player.transform.position);
+
+        clickedObjNode.IsTarget = true;
 
 
         int actualRange = Mathf.Abs(clickedObjNode.gridX - playerNode.gridX) + Mathf.Abs(clickedObjNode.gridY - playerNode.gridY);
@@ -83,31 +91,6 @@ public class ClickDetector : MonoBehaviour
         }
     }
 
-    IEnumerator MovePlayer()
-    {
-        foreach (Node n in GridManager.Instance.path)
-        {
-            player.GetComponent<PersonnageScript>().actualMovementPoint -= 1;
-            while (Vector3.Distance(player.transform.position, n.nodeObj.transform.position) > 0.05f)
-            {
-                float step = speed * Time.deltaTime;
-                player.transform.position = Vector3.MoveTowards(player.transform.position, n.nodeObj.transform.position, step);
-                yield return null;
-            }
-        }
-        GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
-        GridManager.Instance.CheckWalkable();
-    }
-
-
-    bool PathCheck()
-    {
-        if (GridManager.Instance.grid[(int)(clickedObjectPosition.x + GridManager.Instance.gridSizexCoeff), (int)(clickedObjectPosition.z + GridManager.Instance.gridSizeyCoeff)].groundstate == GroundState.possible)
-        {
-            return true;
-        }
-        return false;
-    }
 
     GameObject GetClickedGameObject() 
     {

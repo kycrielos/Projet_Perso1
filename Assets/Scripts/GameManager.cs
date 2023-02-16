@@ -80,7 +80,7 @@ public class GridManager : Singleton<GridManager>
 
     GameObject gridObj;
 
-    GroundState _groundtstate;
+    GroundStateEnum _groundtstate;
 
 
     public void CreateGrid()
@@ -101,15 +101,15 @@ public class GridManager : Singleton<GridManager>
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
                 if (Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask))
                 {
-                    _groundtstate = GroundState.wall;
+                    _groundtstate = GroundStateEnum.wall;
                 }
                 else if (Physics.CheckSphere(worldPoint, nodeRadius, playerMask))
                 {
-                    _groundtstate = GroundState.player;
+                    _groundtstate = GroundStateEnum.player;
                 }
                 else
                 {
-                    _groundtstate = GroundState.possible;
+                    _groundtstate = GroundStateEnum.possible;
                 }
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
                 gridObj = Instantiate(gridObjPrefab, new Vector3(x - gridSizexCoeff, 0, y - gridSizeyCoeff), Quaternion.identity);
@@ -156,26 +156,7 @@ public class GridManager : Singleton<GridManager>
 
     public List<Node> path;
 
-    private void Update()
-    {
-        if (grid != null)
-        {
-            foreach (Node n in grid)
-            {
-                n.nodeObj.GetComponent<MeshRenderer>().material.color = (n.groundstate == GroundState.possible) ? Color.green : Color.gray;
-                if (path != null && !distanceChecking)
-                    if (path.Contains(n))
-                        if (GameManager.Instance.actualPlayerState == GameManager.PlayerState.idle || GameManager.Instance.actualPlayerState == GameManager.PlayerState.isMoving)
-                            n.nodeObj.GetComponent<MeshRenderer>().material.color = new Color32(252, 185, 65, 1);
-                if (n.isTarget)
-                    n.nodeObj.GetComponent<MeshRenderer>().material.color = new Color32(252, 185, 65, 1);
-            }
-        }
-    }
-
     public List<Node> nodeToCheck = new List<Node>();
-
-    bool distanceChecking;
 
     bool MaxDistanceCheck(Node n)
     {
@@ -183,50 +164,75 @@ public class GridManager : Singleton<GridManager>
         PathFinding.Instance.FindPath(GameManager.Instance.ActualPlayer.transform.position, n.nodeObj.transform.position);
         return (path.Count > GameManager.Instance.ActualPlayerScript.actualMovementPoint);
     }
-    public void CheckWalkable()
+    public void UpdateGridState()
     {
         foreach (Node n in grid)
         {
             if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
             {
-                _groundtstate = GroundState.wall;
+                _groundtstate = GroundStateEnum.wall;
             }
             else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
             {
-                _groundtstate = GroundState.player;
+                _groundtstate = GroundStateEnum.player;
             }
             else
             {
-                _groundtstate = GroundState.toofar;
+                _groundtstate = GroundStateEnum.toofar;
             }
-            n.groundstate = _groundtstate;
+            n.GroundState = _groundtstate;
         }
 
+
         nodeToCheck.Add(NodeFromWorldPoint(GameManager.Instance.ActualPlayer.transform.position));
-        distanceChecking = true;
         while (nodeToCheck.Count > 0)
         {
             Node node = nodeToCheck[0];
             foreach (Node neighbour in GetNeighbours(node))
             {
-                if (neighbour.groundstate == GroundState.toofar)
+                if (neighbour.GroundState == GroundStateEnum.toofar)
                 {
-                    neighbour.groundstate = GroundState.possible;
+                    neighbour.GroundState = GroundStateEnum.possible;
                     if (!MaxDistanceCheck(neighbour))
                     {
                         nodeToCheck.Add(neighbour);
                     }
                     else
                     {
-                        neighbour.groundstate = GroundState.toofar;
+                        neighbour.GroundState = GroundStateEnum.toofar;
                     }
                 }
             }
 
             nodeToCheck.Remove(node);
         }
-        distanceChecking = false;
     }
 }
 
+public class MovementManager : Singleton<MovementManager>
+{
+    public IEnumerator MovePersonnage(GameObject personnage, float speed)
+    {
+        foreach (Node n in GridManager.Instance.path)
+        {
+            personnage.GetComponent<PersonnageScript>().actualMovementPoint -= 1;
+            while (Vector3.Distance(personnage.transform.position, n.nodeObj.transform.position) > 0.05f)
+            {
+                float step = speed * Time.deltaTime;
+                personnage.transform.position = Vector3.MoveTowards(personnage.transform.position, n.nodeObj.transform.position, step);
+                yield return null;
+            }
+        }
+        GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
+        GridManager.Instance.UpdateGridState();
+    }
 
+    public bool PathCheck(Vector3 objectPosition)
+    {
+        if (GridManager.Instance.grid[(int)(objectPosition.x + GridManager.Instance.gridSizexCoeff), (int)(objectPosition.z + GridManager.Instance.gridSizeyCoeff)].GroundState == GroundStateEnum.possible)
+        {
+            return true;
+        }
+        return false;
+    }
+}

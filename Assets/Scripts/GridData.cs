@@ -34,6 +34,6 @@ public class GridData : MonoBehaviour
 	}
     private void Start()
     {
-		GridManager.Instance.CheckWalkable();
+		GridManager.Instance.UpdateGridState();
     }
 }
