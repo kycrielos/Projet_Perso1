@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Move", menuName = "Move/Create new move")]
-public class MoveBase : ScriptableObject
+[CreateAssetMenu(fileName = "Skill", menuName = "Skill/Create new skill")]
+public class SkillBase : ScriptableObject
 {
-    [SerializeField] string moveName;
+    [SerializeField] string skillName;
 
     [TextArea]
     [SerializeField] string description;
@@ -22,9 +22,9 @@ public class MoveBase : ScriptableObject
     [SerializeField] int targetingType;
     [SerializeField] bool isPhysical;
 
-    public string MoveName
+    public string SkillName
     {
-        get { return moveName; }
+        get { return skillName; }
     }
 
     public string Description

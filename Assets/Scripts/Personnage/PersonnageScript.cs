@@ -17,7 +17,7 @@ public class PersonnageScript : MonoBehaviour
 
     public TMP_Text text;
 
-    public MoveBase[] attackSet;
+    public SkillBase[] attackSet;
 
     public List<BuffBase> attachedBuffs = new List<BuffBase>();
     // Start is called before the first frame update

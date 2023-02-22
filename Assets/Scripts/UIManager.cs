@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text paText;
     public TMP_Text pmText;
 
-    public MoveBase[] attackSet = new MoveBase[4];
+    public SkillBase[] attackSet = new SkillBase[4];
     public Button[] attackSetButton;
 
     private void Start()
@@ -32,8 +32,9 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.Instance.actualPlayerState == GameManager.PlayerState.idle)
         {
-            GameManager.Instance.actualPlayerAttack = attackSet[buttonNumber];
             GameManager.Instance.actualPlayerState = GameManager.PlayerState.isTargeting;
+            GameManager.Instance.actualPlayerAttack = attackSet[buttonNumber];
+            GridManager.Instance.UpdateGridState();
         }
     }
 

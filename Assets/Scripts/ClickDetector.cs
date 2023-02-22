@@ -75,6 +75,7 @@ public class ClickDetector : MonoBehaviour
                             clickedObjNode.IsTarget = false;
                             GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
                         }
+                        GridManager.Instance.UpdateGridState();
                     }
                 }
                 break;

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class AttackScript : MonoBehaviour
 {
-    public MoveBase[] moveBase;
+    public SkillBase[] skillBase;
 
     PersonnageBase playerBaseStats;
     PersonnageScript playerScript;
 
-    private MoveBase attack;
+    private SkillBase attack;
 
     // Start is called before the first frame update
     void Start()

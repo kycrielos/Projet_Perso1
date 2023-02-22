@@ -113,11 +113,11 @@ public class PersonnageBase : ScriptableObject
 [System.Serializable]
 public class LearnableMove
 {
-    [SerializeField] MoveBase moveBase;
+    [SerializeField] SkillBase skillBase;
 
-    public MoveBase Base
+    public SkillBase Base
     {
-        get { return moveBase; }
+        get { return skillBase; }
     }
 }
 

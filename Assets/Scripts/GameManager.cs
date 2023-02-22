@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
 {
     public int playingPersonnage;
     public PlayerState actualPlayerState;
-    public MoveBase actualPlayerAttack;
+    public SkillBase actualPlayerAttack;
 
     public List<GameObject> playerOrder = new List<GameObject>();
     public int turnCount;
@@ -186,49 +186,83 @@ public class GridManager : Singleton<GridManager>
     }
     public void UpdateGridState()
     {
-        foreach (Node n in grid)
+        switch (GameManager.Instance.actualPlayerState)
         {
-            if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
-            {
-                _groundtstate = GroundStateEnum.wall;
-                _player = null;
-            }
-            else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
-            {
-                _groundtstate = GroundStateEnum.player;
-                _player = Physics.OverlapSphere(n.nodeObj.transform.position, nodeRadius, playerMask)[0].gameObject;
-            }
-            else
-            {
-                _groundtstate = GroundStateEnum.toofar;
-                _player = null;
-            }
-            n.GroundState = _groundtstate;
-            n.player = _player;
-        }
-
-
-        nodeToCheck.Add(NodeFromWorldPoint(GameManager.Instance.ActualPlayer.transform.position));
-        while (nodeToCheck.Count > 0)
-        {
-            Node node = nodeToCheck[0];
-            foreach (Node neighbour in GetNeighbours(node))
-            {
-                if (neighbour.GroundState == GroundStateEnum.toofar)
+            case GameManager.PlayerState.idle:
+                foreach (Node n in grid)
                 {
-                    neighbour.GroundState = GroundStateEnum.possible;
-                    if (!MaxDistanceCheck(neighbour))
+                    if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
                     {
-                        nodeToCheck.Add(neighbour);
+                        _groundtstate = GroundStateEnum.wall;
+                        _player = null;
+                    }
+                    else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
+                    {
+                        _groundtstate = GroundStateEnum.player;
+                        _player = Physics.OverlapSphere(n.nodeObj.transform.position, nodeRadius, playerMask)[0].gameObject;
                     }
                     else
                     {
-                        neighbour.GroundState = GroundStateEnum.toofar;
+                        _groundtstate = GroundStateEnum.toofar;
+                        _player = null;
                     }
+                    n.GroundState = _groundtstate;
+                    n.player = _player;
                 }
-            }
 
-            nodeToCheck.Remove(node);
+                nodeToCheck.Add(NodeFromWorldPoint(GameManager.Instance.ActualPlayer.transform.position));
+                while (nodeToCheck.Count > 0)
+                {
+                    Node node = nodeToCheck[0];
+                    foreach (Node neighbour in GetNeighbours(node))
+                    {
+                        if (neighbour.GroundState == GroundStateEnum.toofar)
+                        {
+                            neighbour.GroundState = GroundStateEnum.possible;
+                            if (!MaxDistanceCheck(neighbour))
+                            {
+                                nodeToCheck.Add(neighbour);
+                            }
+                            else
+                            {
+                                neighbour.GroundState = GroundStateEnum.toofar;
+                            }
+                        }
+                    }
+
+                    nodeToCheck.Remove(node);
+                }
+                break;
+            case GameManager.PlayerState.isTargeting:
+
+                foreach (Node n in grid)
+                {
+                    Node playerNode = NodeFromWorldPoint(GameManager.Instance.ActualPlayer.transform.position); //get player Node
+                    int actualRange = Mathf.Abs(n.gridX - playerNode.gridX) + Mathf.Abs(n.gridY - playerNode.gridY);
+                    if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
+                    {
+                        _groundtstate = GroundStateEnum.wall;
+                        _player = null;
+                    }
+                    else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
+                    {
+                        _groundtstate = GroundStateEnum.player;
+                        _player = Physics.OverlapSphere(n.nodeObj.transform.position, nodeRadius, playerMask)[0].gameObject;
+                    }
+                    else if (actualRange <= GameManager.Instance.actualPlayerAttack.Range && actualRange >= GameManager.Instance.actualPlayerAttack.MinimumRange)
+                    {
+                        _groundtstate = GroundStateEnum.possible;
+                        _player = null;
+                    }
+                    else
+                    {
+                        _groundtstate = GroundStateEnum.toofar;
+                        _player = null;
+                    }
+                    n.GroundState = _groundtstate;
+                    n.player = _player;
+                }
+                break;
         }
     }
 }
