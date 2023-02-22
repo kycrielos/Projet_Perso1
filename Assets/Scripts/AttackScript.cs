@@ -6,29 +6,33 @@ public class AttackScript : MonoBehaviour
 {
     public MoveBase[] moveBase;
 
-    public MoveBase chosenMove;
-
     PersonnageBase playerBaseStats;
     PersonnageScript playerScript;
+
+    private MoveBase attack;
 
     // Start is called before the first frame update
     void Start()
     {
         playerScript = GetComponent<PersonnageScript>();
+        playerBaseStats = playerScript.personnage;
     }
 
     public void Attack(PersonnageScript targetScript)
     {
-        if (playerScript.actualActionPoint >= chosenMove.Cost)
+        attack = GameManager.Instance.actualPlayerAttack;
+        if (playerScript.actualActionPoint >= attack.Cost)
         {
-            playerScript.actualActionPoint -= chosenMove.Cost;
-            if (chosenMove.IsPhysical)
+            playerScript.actualActionPoint -= attack.Cost;
+            if (attack.IsPhysical)
             {
-                targetScript.physicalDamage = (chosenMove.Ratio * ((playerBaseStats.Atk + 100) / 100) * chosenMove.Power) + playerBaseStats.bonusPhysicalDamageFix;
+                targetScript.physicalDamage = (attack.Power * (playerBaseStats.Atk + 100) / 100) + playerBaseStats.bonusPhysicalDamageFix;
             }
             else
             {
-                targetScript.specialDamage = (chosenMove.Ratio * ((playerBaseStats.SpeAtk + 100) / 100) * chosenMove.Power) + playerBaseStats.bonusSpecialDamageFix;
+                targetScript.specialDamage = (attack.Power * (playerBaseStats.SpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
+                targetScript.Damaged();
+                GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
             }
         }
     }

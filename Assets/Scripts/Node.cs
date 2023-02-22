@@ -11,6 +11,11 @@ public class Node
         {
 			groundState = value;
 
+			if (groundState != GroundStateEnum.player)
+            {
+				player = null;
+            }
+
 			//everytime the state change change the color too
 			if (groundState == GroundStateEnum.wall || groundState == GroundStateEnum.nothing)
 			{
@@ -35,6 +40,9 @@ public class Node
 	public Node parent;
 
 	private bool isTarget;
+
+	public GameObject player;
+
 	public bool IsTarget
 	{
 		get { return isTarget; }
@@ -69,13 +77,14 @@ public class Node
 	}
 
 	//I forgot why it's like this and i'm to scared to try to change it
-	public Node(GroundStateEnum _groundstate, Vector3 _worldPos, int _gridX, int _gridY, GameObject _nodeObj)
+	public Node(GroundStateEnum _groundstate, Vector3 _worldPos, int _gridX, int _gridY, GameObject _nodeObj, GameObject _player)
 	{
 		nodeObj = _nodeObj;
 		GroundState = _groundstate;
 		worldPosition = _worldPos;
 		gridX = _gridX;
 		gridY = _gridY;
+		player = _player;
 	}
 
 	public int fCost // total cost (used in the pathfinder)

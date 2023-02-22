@@ -21,6 +21,7 @@ public class GameManager : Singleton<GameManager>
 {
     public int playingPersonnage;
     public PlayerState actualPlayerState;
+    public MoveBase actualPlayerAttack;
 
     public List<GameObject> playerOrder = new List<GameObject>();
     public int turnCount;
@@ -51,9 +52,13 @@ public class GameManager : Singleton<GameManager>
         isDying,
     }
 
+    public delegate void StartTurnEventHandler();
+    public static event StartTurnEventHandler StartTurnEvent;
+
     //when called skip to the next character turn
     public void NextPlayerTurn()
     {
+        ActualPlayerScript.EndTurn();
         if (actualPlayerIndex < playerOrder.Count -1)
         {
             actualPlayerIndex++;
@@ -64,6 +69,12 @@ public class GameManager : Singleton<GameManager>
             actualPlayerIndex = 0;
         }
         ActualPlayerScript.StartTurn();
+        RaiseStartTurnEvent();
+    }
+
+    protected virtual void RaiseStartTurnEvent()
+    {
+        StartTurnEvent?.Invoke();
     }
 }
 
@@ -86,6 +97,8 @@ public class GridManager : Singleton<GridManager>
 
     GroundStateEnum _groundtstate;
 
+    GameObject _player;
+
 
     public void CreateGrid()
     {
@@ -106,18 +119,21 @@ public class GridManager : Singleton<GridManager>
                 if (Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask))
                 {
                     _groundtstate = GroundStateEnum.wall;
+                    _player = null;
                 }
                 else if (Physics.CheckSphere(worldPoint, nodeRadius, playerMask))
                 {
                     _groundtstate = GroundStateEnum.player;
+                    _player = Physics.OverlapSphere(worldPoint, nodeRadius, playerMask)[0].gameObject;
                 }
                 else
                 {
                     _groundtstate = GroundStateEnum.possible;
+                    _player = null;
                 }
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
                 gridObj = Instantiate(gridObjPrefab, new Vector3(x - gridSizexCoeff, 0, y - gridSizeyCoeff), Quaternion.identity);
-                grid[x, y] = new Node(_groundtstate, worldPoint, x, y, gridObj);
+                grid[x, y] = new Node(_groundtstate, worldPoint, x, y, gridObj, _player);
             }
         }
     }
@@ -175,16 +191,20 @@ public class GridManager : Singleton<GridManager>
             if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
             {
                 _groundtstate = GroundStateEnum.wall;
+                _player = null;
             }
             else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
             {
                 _groundtstate = GroundStateEnum.player;
+                _player = Physics.OverlapSphere(n.nodeObj.transform.position, nodeRadius, playerMask)[0].gameObject;
             }
             else
             {
                 _groundtstate = GroundStateEnum.toofar;
+                _player = null;
             }
             n.GroundState = _groundtstate;
+            n.player = _player;
         }
 
 

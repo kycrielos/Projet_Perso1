@@ -15,11 +15,10 @@ MonoBehaviour:
   moveName: Magic Blast
   description: 
   powerType: 4
-  power: 120
+  power: 80
   range: 14
   minimumRange: 1
-  cost: 10
+  cost: 15
   lineOfSight: 1
   targetingType: 1
-  ratio: 0
   isPhysical: 0

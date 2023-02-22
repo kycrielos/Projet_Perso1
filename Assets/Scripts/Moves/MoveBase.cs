@@ -20,7 +20,6 @@ public class MoveBase : ScriptableObject
 
     [Tooltip("0 = everything can be target, 1 = square with a target on it only, 2 = empty square only")]
     [SerializeField] int targetingType;
-    [SerializeField] float ratio;
     [SerializeField] bool isPhysical;
 
     public string MoveName
@@ -67,10 +66,6 @@ public class MoveBase : ScriptableObject
         get { return targetingType; }
     }
 
-    public float Ratio
-    {
-        get { return ratio; }
-    }
     public bool IsPhysical
     {
         get { return isPhysical; }

@@ -17,12 +17,12 @@ MonoBehaviour:
   personnageRace1: 0
   personnageRace2: 10
   personnagePowerType: 6
-  maxHp: 120
-  actualHp: 120
-  atk: 160
-  speAtk: 0
-  def: 140
-  speDef: 100
+  maxHp: 300
+  actualHp: 213
+  atk: 140
+  speAtk: 10
+  def: 150
+  speDef: 120
   movementPoint: 6
   actionPoint: 10
   bonusPhysicalDamageFix: 0

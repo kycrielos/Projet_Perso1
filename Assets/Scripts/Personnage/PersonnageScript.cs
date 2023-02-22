@@ -17,6 +17,8 @@ public class PersonnageScript : MonoBehaviour
 
     public TMP_Text text;
 
+    public MoveBase[] attackSet;
+
     public List<BuffBase> attachedBuffs = new List<BuffBase>();
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,10 @@ public class PersonnageScript : MonoBehaviour
         actualMovementPoint = personnage.MovementPoint;
         GameManager.Instance.playerOrder.Add(gameObject);
         text.text = personnage.ActualHp.ToString() + " HP";
+        if (personnage.ActualHp <= 0)
+        {
+            Killed();
+        }
     }
 
     public void StartTurn()
@@ -38,24 +44,38 @@ public class PersonnageScript : MonoBehaviour
         actualActionPoint = personnage.ActionPoint;
         actualMovementPoint = personnage.MovementPoint;
         playerturn = false;
-        GameManager.Instance.NextPlayerTurn();
     }
 
     public void Damaged()
     {
         if (physicalDamage > personnage.bonusPhysicalResistanceFix)
         {
-            personnage.ActualHp -= Mathf.RoundToInt((physicalDamage - personnage.bonusPhysicalResistanceFix) * (100 / (personnage.Def + 100)));
+            personnage.ActualHp -= Mathf.RoundToInt((physicalDamage - personnage.bonusPhysicalResistanceFix) * (100f / (personnage.Def + 100f)));
         }
 
         if (specialDamage > personnage.bonusSpecialResistanceFix)
         {
-            personnage.ActualHp -= Mathf.RoundToInt((specialDamage - personnage.bonusSpecialResistanceFix) * (100 / (personnage.SpeDef + 100)));
+            personnage.ActualHp -= Mathf.RoundToInt((specialDamage - personnage.bonusSpecialResistanceFix) * (100f / (personnage.SpeDef + 100f)));
         }
 
         physicalDamage = 0;
         specialDamage = 0;
 
         text.text = personnage.ActualHp.ToString() + " HP";
+
+        if (personnage.ActualHp <= 0)
+        {
+            Killed();
+        }
+    }
+
+    public void Killed()
+    {
+        if (playerturn)
+        {
+            GameManager.Instance.NextPlayerTurn();
+        }
+        GameManager.Instance.playerOrder.Remove(gameObject);
+        Destroy(gameObject);
     }
 }
