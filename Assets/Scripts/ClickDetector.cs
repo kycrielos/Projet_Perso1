@@ -7,6 +7,7 @@ public class ClickDetector : MonoBehaviour
     public PersonnageScript playerScript;
 
     AttackScript playerAttack;
+    GameObject attackTarget;
 
     public float speed;
 
@@ -53,7 +54,8 @@ public class ClickDetector : MonoBehaviour
                         }
 
                         //get the new target node
-                        clickedObjNode = GridManager.Instance.NodeFromWorldPoint(GetClickedGameObject().transform.position);
+                        attackTarget = GetClickedGameObject();
+                        clickedObjNode = GridManager.Instance.NodeFromWorldPoint(attackTarget.transform.position);
                         clickedObjNode.IsTarget = true;
 
                         //Check if the player click on a valid node if not return the player to idle
@@ -61,7 +63,7 @@ public class ClickDetector : MonoBehaviour
                         {
                             if (targetCheck())
                             {
-
+                                playerAttack.Attack(attackTarget.GetComponent<PersonnageScript>());
                             }
                             else
                             {

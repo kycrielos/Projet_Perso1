@@ -18,6 +18,7 @@ MonoBehaviour:
   personnageRace2: 10
   personnagePowerType: 6
   maxHp: 120
+  actualHp: 120
   atk: 160
   speAtk: 0
   def: 140

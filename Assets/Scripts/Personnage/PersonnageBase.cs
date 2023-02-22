@@ -16,7 +16,7 @@ public class PersonnageBase : ScriptableObject
     [SerializeField] PersonnagePowerType personnagePowerType;
 
     [SerializeField] int maxHp;
-    int actualHp;
+    [SerializeField] int actualHp;
     [SerializeField] int atk;
     [SerializeField] int speAtk;
     [SerializeField] int def;

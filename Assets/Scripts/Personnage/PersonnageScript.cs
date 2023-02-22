@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PersonnageScript : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PersonnageScript : MonoBehaviour
 
     public bool playerturn;
 
+    public TMP_Text text;
+
     public List<BuffBase> attachedBuffs = new List<BuffBase>();
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,7 @@ public class PersonnageScript : MonoBehaviour
         actualActionPoint = personnage.ActionPoint;
         actualMovementPoint = personnage.MovementPoint;
         GameManager.Instance.playerOrder.Add(gameObject);
+        text.text = personnage.ActualHp.ToString() + " HP";
     }
 
     public void StartTurn()
@@ -51,5 +55,7 @@ public class PersonnageScript : MonoBehaviour
 
         physicalDamage = 0;
         specialDamage = 0;
+
+        text.text = personnage.ActualHp.ToString() + " HP";
     }
 }
