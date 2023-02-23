@@ -32,7 +32,7 @@ public class AttackScript : MonoBehaviour
             {
                 targetScript.specialDamage = (attack.Power * (playerBaseStats.SpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
                 targetScript.Damaged();
-                GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
+                GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
             }
         }
     }

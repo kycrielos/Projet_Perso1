@@ -30,7 +30,7 @@ public class ClickDetector : MonoBehaviour
             playerAttack = player.GetComponent<AttackScript>();
             playerScript = player.GetComponent<PersonnageScript>();
         }
-        switch (GameManager.Instance.actualPlayerState)
+        switch (GameManager.Instance.ActualPlayerState)
         {
             //if the player is in idle it will check for the movement possibilities
             case GameManager.PlayerState.idle:
@@ -42,7 +42,7 @@ public class ClickDetector : MonoBehaviour
                     //Start the player movement coroutine if the player click on a valid node
                     if (Input.GetMouseButtonDown(0) && MovementManager.Instance.PathCheck(GetClickedGameObject().transform.position))
                     {
-                        GameManager.Instance.actualPlayerState = GameManager.PlayerState.isMoving;
+                        GameManager.Instance.ActualPlayerState = GameManager.PlayerState.isMoving;
                         StartCoroutine(MovementManager.Instance.MovePersonnage(player, speed));
                     }
                 }
@@ -73,7 +73,7 @@ public class ClickDetector : MonoBehaviour
                         else
                         {
                             clickedObjNode.IsTarget = false;
-                            GameManager.Instance.actualPlayerState = GameManager.PlayerState.idle;
+                            GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
                         }
                         GridManager.Instance.UpdateGridState();
                     }
@@ -93,14 +93,20 @@ public class ClickDetector : MonoBehaviour
         // return false if the  node can't be a target for the player actual attack
         switch (GameManager.Instance.actualPlayerAttack.TargetingType) //0 = everything can be target, 1 = square with a target on it only, 2 = empty square only
         {
+            case 0:
+                if (clickedObjNode.GroundState != GroundStateEnum.player && clickedObjNode.GroundState != GroundStateEnum.targetable)
+                {
+                    return false;
+                }
+                break;
             case 1:
-                if (clickedObjNode.GroundState != GroundStateEnum.player)
+                if (clickedObjNode.GroundState != GroundStateEnum.targetablePlayer)
                 {
                     return false;
                 }
                 break;
             case 2:
-                if (clickedObjNode.GroundState == GroundStateEnum.player)
+                if (clickedObjNode.GroundState != GroundStateEnum.targetable)
                 {
                     return false;
                 }

@@ -30,11 +30,10 @@ public class UIManager : MonoBehaviour
 
     public void UIAttackClick(int buttonNumber)
     {
-        if (GameManager.Instance.actualPlayerState == GameManager.PlayerState.idle)
+        if (GameManager.Instance.ActualPlayerState == GameManager.PlayerState.idle)
         {
-            GameManager.Instance.actualPlayerState = GameManager.PlayerState.isTargeting;
             GameManager.Instance.actualPlayerAttack = attackSet[buttonNumber];
-            GridManager.Instance.UpdateGridState();
+            GameManager.Instance.ActualPlayerState = GameManager.PlayerState.isTargeting;
         }
     }
 

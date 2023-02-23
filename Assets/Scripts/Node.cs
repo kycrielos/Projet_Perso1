@@ -17,18 +17,46 @@ public class Node
             }
 
 			//everytime the state change change the color too
-			if (groundState == GroundStateEnum.wall || groundState == GroundStateEnum.nothing)
+			switch (groundState)
 			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
-			}
-			else
-			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = (groundState == GroundStateEnum.possible) ? Color.green : Color.gray;
+				case GroundStateEnum.wall:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
+					colliderObj.layer = 11;
+					break;
+				case GroundStateEnum.nothing:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
+					colliderObj.layer = 13;
+					break;
+				case GroundStateEnum.possible:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.green;
+					colliderObj.layer = 13;
+					break;
+				case GroundStateEnum.targetable:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.cyan;
+					colliderObj.layer = 13;
+					break;
+				case GroundStateEnum.targetablePlayer:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.cyan;
+					colliderObj.layer = 13;
+					break;
+				case GroundStateEnum.noView:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.red;
+					colliderObj.layer = 13;
+					break;
+				case GroundStateEnum.player:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.grey;
+					colliderObj.layer = 13;
+					break;
+				default:
+					nodeObj.GetComponent<MeshRenderer>().material.color = Color.grey;
+					colliderObj.layer = 13;
+					break;
 			}
 		}
 	}
 
 	public GameObject nodeObj;
+	public GameObject colliderObj;
 	public Vector3 worldPosition;
 	public int gridX;
 	public int gridY;
@@ -51,9 +79,13 @@ public class Node
 			isTarget = value;
 
 			//if the square is targeted change its color
-			if (groundState == GroundStateEnum.possible)
+			if (groundState == GroundStateEnum.targetable || groundState == GroundStateEnum.targetablePlayer)
 			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.green;
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.cyan;
+			}
+			else if (groundState == GroundStateEnum.noView)
+			{
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.red;
 			}
 			else if(groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
 			{
@@ -77,9 +109,10 @@ public class Node
 	}
 
 	//I forgot why it's like this and i'm to scared to try to change it
-	public Node(GroundStateEnum _groundstate, Vector3 _worldPos, int _gridX, int _gridY, GameObject _nodeObj, GameObject _player)
+	public Node(GroundStateEnum _groundstate, Vector3 _worldPos, int _gridX, int _gridY, GameObject _nodeObj, GameObject _colliderObj, GameObject _player)
 	{
 		nodeObj = _nodeObj;
+		colliderObj = _colliderObj;
 		GroundState = _groundstate;
 		worldPosition = _worldPos;
 		gridX = _gridX;
@@ -100,6 +133,9 @@ public enum GroundStateEnum
 {
 	nothing,
 	possible,
+	noView,
+	targetable,
+	targetablePlayer,
 	player,
 	wall,
 	toofar,

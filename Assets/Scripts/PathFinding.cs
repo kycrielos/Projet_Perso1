@@ -9,7 +9,7 @@ public class PathFinding : Singleton<PathFinding>
 
 	void Update()
 	{
-		if (GameManager.Instance.actualPlayerState == GameManager.PlayerState.idle)
+		if (GameManager.Instance.ActualPlayerState == GameManager.PlayerState.idle)
 		{
 			FindPath(GameManager.Instance.ActualPlayer.transform.position, target.position);
 		}

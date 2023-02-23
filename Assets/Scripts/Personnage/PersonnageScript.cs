@@ -43,6 +43,7 @@ public class PersonnageScript : MonoBehaviour
     {
         actualActionPoint = personnage.ActionPoint;
         actualMovementPoint = personnage.MovementPoint;
+        GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
         playerturn = false;
     }
 

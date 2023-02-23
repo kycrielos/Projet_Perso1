@@ -6,6 +6,7 @@ public class GridData : MonoBehaviour
 {
 	public LayerMask unwalkableMask;
 	public LayerMask playerMask;
+	public LayerMask fieldOfViewMask;
 	public Vector2 gridWorldSize;
 	public float nodeRadius;
 	public Node[,] grid;
@@ -13,6 +14,7 @@ public class GridData : MonoBehaviour
 	public float gridSizexCoeff, gridSizeyCoeff;
 
 	public GameObject gridObjPrefab;
+	public GameObject colliderObjPrefab;
 
 	void Awake()
 	{
@@ -21,7 +23,8 @@ public class GridData : MonoBehaviour
 	}
 
 	public void SetupVar()
-    {
+	{
+		GridManager.Instance.fieldOfViewMask = fieldOfViewMask;
 		GridManager.Instance.unwalkableMask = unwalkableMask;
 		GridManager.Instance.playerMask = playerMask;
 		GridManager.Instance.gridWorldSize = gridWorldSize;
@@ -30,6 +33,7 @@ public class GridData : MonoBehaviour
 		GridManager.Instance.gridSizexCoeff = gridSizexCoeff;
 		GridManager.Instance.gridSizeyCoeff = gridSizeyCoeff;
 		GridManager.Instance.gridObjPrefab = gridObjPrefab;
+		GridManager.Instance.colliderObjPrefab = colliderObjPrefab;
 
 	}
     private void Start()
