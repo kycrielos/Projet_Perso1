@@ -47,6 +47,16 @@ public class PersonnageScript : MonoBehaviour
         playerturn = false;
     }
 
+    public void Healed(int value)
+    {
+        personnage.ActualHp += value;
+        if (personnage.ActualHp > personnage.MaxHp)
+        {
+            personnage.ActualHp = personnage.MaxHp;
+        }
+
+        text.text = personnage.ActualHp.ToString() + " HP";
+    }
     public void Damaged()
     {
         if (physicalDamage > personnage.bonusPhysicalResistanceFix)

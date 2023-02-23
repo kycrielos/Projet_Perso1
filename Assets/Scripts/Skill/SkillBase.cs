@@ -22,6 +22,9 @@ public class SkillBase : ScriptableObject
     [SerializeField] int targetingType;
     [SerializeField] bool isPhysical;
 
+
+    [SerializeField] SpecialEffect effect;
+
     public string SkillName
     {
         get { return skillName; }
@@ -71,9 +74,12 @@ public class SkillBase : ScriptableObject
         get { return isPhysical; }
     }
 
-    protected virtual void CastSpecialEffects(PersonnageScript target)
+    public void CastSpecialEffects(PersonnageScript target)
     {
-
+        if (effect != null)
+        {
+            effect.Init(target);
+        }
     }
 
     protected void Ralstats(int value, string designatedStats, PersonnageBase target)

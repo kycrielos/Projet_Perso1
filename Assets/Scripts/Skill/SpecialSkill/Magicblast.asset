@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7752ba9864af6f4bb6d3a15303c7537, type: 3}
   m_Name: Magicblast
   m_EditorClassIdentifier: 
-  moveName: Magic Blast
+  skillName: 
   description: 
   powerType: 4
   power: 80
@@ -22,3 +22,4 @@ MonoBehaviour:
   lineOfSight: 1
   targetingType: 1
   isPhysical: 0
+  effect: {fileID: 11400000, guid: 47f33a98847c7774cbf174a01b4c9e4c, type: 2}
