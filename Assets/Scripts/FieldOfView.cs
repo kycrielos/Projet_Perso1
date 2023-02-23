@@ -58,19 +58,6 @@ public class FieldOfView : MonoBehaviour {
 			viewCollider.enabled = false;
 		}
 	}
-	void LateUpdate()
-	{
-		/*if (GameManager.Instance.actualPlayerAttack != null && player.playerturn && GameManager.Instance.actualPlayerState == GameManager.PlayerState.isTargeting)
-        {
-			viewRadius = GameManager.Instance.actualPlayerAttack.Range;
-			viewCollider.enabled = true;
-			DrawFieldOfView();
-	}
-        else
-		{
-			viewCollider.enabled = false;
-		}*/
-	}
 
 	void FindVisibleTargets() 
 	{
