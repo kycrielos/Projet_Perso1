@@ -1945,7 +1945,7 @@ MonoBehaviour:
   playerturn: 0
   text: {fileID: 459730258}
   attackSet:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e552ee671edcaf348924e4b2945d0b1d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

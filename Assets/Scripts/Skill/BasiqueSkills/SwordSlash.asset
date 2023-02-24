@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7752ba9864af6f4bb6d3a15303c7537, type: 3}
   m_Name: SwordSlash
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Sword Slash
   description: 
   powerType: 0
-  power: 0
-  range: 0
-  minimumRange: 0
-  cost: 0
-  lineOfSight: 0
-  targetingType: 0
-  isPhysical: 0
+  power: 70
+  range: 1
+  minimumRange: 1
+  cost: 3
+  lineOfSight: 1
+  targetingType: 1
+  isPhysical: 1
   effect: {fileID: 0}

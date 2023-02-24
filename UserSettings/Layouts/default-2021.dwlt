@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 35
+  controlID: 85
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1473,7 +1473,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 23222
+  m_LastSelectedObjectID: 23020
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1515,22 +1515,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scripts/Personnage/Hero
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scripts/Personnage/Hero
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Utilisateur\Documents\GitHub\Projet_Perso1
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 425d0000
-    m_LastClickedID: 23874
-    m_ExpandedIDs: 00000000c85c0000ca5c0000425d0000725d0000745d000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 83}
+    m_SelectedIDs: 045f0000
+    m_LastClickedID: 24324
+    m_ExpandedIDs: 00000000c85c0000ca5c0000e45c00000c5d0000c05e000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1589,18 +1589,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c62300009ecb000062480000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Krycis, the Great Wizard
-      m_OriginalName: Krycis, the Great Wizard
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 23236
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 5}
     m_CreateAssetUtility:
@@ -1686,25 +1686,25 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 90b10000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 38fbfffff4ffffff9c590000ce590000ea5900000a5a0000585a0000a65a0000
+      m_ExpandedIDs: 38fbfffff4ffffff9e590000d0590000ec5900000c5a00005a5a0000a25a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Mesh
+        m_OriginalName: Mesh
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 23130
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 11}
+        m_ClientGUIView: {fileID: 4}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -1937,9 +1937,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.4481459, y: -0.6134162, z: -1.1174283}
+    m_Target: {x: -0.9952593, y: 1.2813599, z: 0.71744937}
     speed: 2
-    m_Value: {x: 1.4481459, y: -0.6134162, z: -1.1174283}
+    m_Value: {x: -0.9952593, y: 1.2813599, z: 0.71744937}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1986,13 +1986,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.44742292, y: -0.18532191, z: 0.094635814, w: -0.8699599}
+    m_Target: {x: 0.34383327, y: 0.0047909874, z: -0.0017543465, w: 0.9390187}
     speed: 2
-    m_Value: {x: -0.4473519, y: -0.1852925, z: 0.09462079, w: -0.8698218}
+    m_Value: {x: 0.34383264, y: 0.004790979, z: -0.0017543434, w: 0.93901706}
   m_Size:
-    m_Target: 19.598343
+    m_Target: 8.301242
     speed: 2
-    m_Value: 19.598343
+    m_Value: 8.301242
   m_Ortho:
     m_Target: 0
     speed: 2
