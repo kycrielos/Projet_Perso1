@@ -99,6 +99,20 @@ public class GameManager : Singleton<GameManager>
         RaiseStartTurnEvent();
     }
 
+    public void RemoveFromIndex(GameObject objToRemove)
+    {
+        GameObject actualPlayer = ActualPlayer;
+        playerOrder.Remove(objToRemove);
+        for (int i = 0; i < playerOrder.Count; i++)
+        {
+            if (playerOrder[i] == actualPlayer)
+            {
+                actualPlayerIndex = i;
+                break;
+            }
+        }
+    }
+
     protected virtual void RaiseStartTurnEvent()
     {
         StartTurnEvent?.Invoke();

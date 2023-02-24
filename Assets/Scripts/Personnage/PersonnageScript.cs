@@ -109,7 +109,7 @@ public class PersonnageScript : MonoBehaviour
         {
             GameManager.Instance.NextPlayerTurn();
         }
-        GameManager.Instance.playerOrder.Remove(gameObject);
+        GameManager.Instance.RemoveFromIndex(gameObject);
         Destroy(gameObject);
     }
 }
