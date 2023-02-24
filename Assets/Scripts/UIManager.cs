@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
         {
             if (attackSet[i] != null)
             {
-                attackSetButton[i].GetComponentInChildren<TMP_Text>().text = attackSet[i].name;
+                attackSetButton[i].GetComponentInChildren<TMP_Text>().text = attackSet[i].SkillName;
             }
             else
             {

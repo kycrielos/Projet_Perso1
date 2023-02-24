@@ -15,20 +15,20 @@ public class PersonnageBase : ScriptableObject
 
     [SerializeField] PersonnagePowerType personnagePowerType;
 
-    [SerializeField] int maxHp;
-    [SerializeField] int actualHp;
-    [SerializeField] int atk;
-    [SerializeField] int speAtk;
-    [SerializeField] int def;
-    [SerializeField] int speDef;
-    [SerializeField] int movementPoint;
-    [SerializeField] int actionPoint;
+    [SerializeField] float maxHp;
+    [SerializeField] float actualHp;
+    [SerializeField] float atk;
+    [SerializeField] float speAtk;
+    [SerializeField] float def;
+    [SerializeField] float speDef;
+    [SerializeField] float movementPoint;
+    [SerializeField] float actionPoint;
 
-    public int bonusPhysicalDamageFix;
-    public int bonusSpecialDamageFix;
+    public float bonusPhysicalDamageFix;
+    public float bonusSpecialDamageFix;
 
-    public int bonusPhysicalResistanceFix;
-    public int bonusSpecialResistanceFix;
+    public float bonusPhysicalResistanceFix;
+    public float bonusSpecialResistanceFix;
 
     [SerializeField] List<LearnableMove> learnableMoves;
 
@@ -57,48 +57,48 @@ public class PersonnageBase : ScriptableObject
         get { return personnagePowerType; }
     }
 
-    public int MaxHp
+    public float MaxHp
     {
         get { return maxHp; }
         set { maxHp = value; }
     }
-    public int ActualHp
+    public float ActualHp
     {
         get { return actualHp; }
         set { actualHp = value; }
     }
 
-    public int Atk
+    public float Atk
     {
         get { return atk; }
         set { atk = value; }
     }
 
-    public int SpeAtk
+    public float SpeAtk
     {
         get { return speAtk; }
         set { speAtk = value; }
     }
 
-    public int Def
+    public float Def
     {
         get { return def; }
         set { def = value; }
     }
 
-    public int SpeDef
+    public float SpeDef
     {
         get { return speDef; }
         set { speDef = value; }
     }
 
-    public int MovementPoint
+    public float MovementPoint
     {
         get { return movementPoint; }
         set { movementPoint = value; }
     }
 
-    public int ActionPoint
+    public float ActionPoint
     {
         get { return actionPoint; }
         set { actionPoint = value; }

@@ -26,11 +26,11 @@ public class AttackScript : MonoBehaviour
             playerScript.actualActionPoint -= attack.Cost;
             if (attack.IsPhysical)
             {
-                targetScript.physicalDamage = (attack.Power * (playerBaseStats.Atk + 100) / 100) + playerBaseStats.bonusPhysicalDamageFix;
+                targetScript.physicalDamage = (attack.Power * (playerScript.actualAtk + 100) / 100) + playerBaseStats.bonusPhysicalDamageFix;
             }
             else
             {
-                targetScript.specialDamage = (attack.Power * (playerBaseStats.SpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
+                targetScript.specialDamage = (attack.Power * (playerScript.actualSpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
             }
             targetScript.Damaged();
             attack.CastSpecialEffects(targetScript);

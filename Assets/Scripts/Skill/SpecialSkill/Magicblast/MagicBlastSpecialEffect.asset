@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103650f2a9fadb04c81265d96e361d73, type: 3}
-  m_Name: Test
+  m_Script: {fileID: 11500000, guid: 6f9afbeca8bf55842b1ada62940b9066, type: 3}
+  m_Name: MagicBlastSpecialEffect
   m_EditorClassIdentifier: 
+  statsChangeObjPrefab: {fileID: 1956803376603611005, guid: 894a85a59e74eb740a570b108a14fd92, type: 3}

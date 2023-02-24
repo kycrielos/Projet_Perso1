@@ -24,7 +24,7 @@ MonoBehaviour:
   def: 70
   speDef: 140
   movementPoint: 3
-  actionPoint: 25
+  actionPoint: 11
   bonusPhysicalDamageFix: 0
   bonusSpecialDamageFix: 0
   bonusPhysicalResistanceFix: 0

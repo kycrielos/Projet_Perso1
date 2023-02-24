@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Buff", menuName = "Buff/Create new Buff")]
-public class BuffBase : ScriptableObject
+public abstract class BuffBase : MonoBehaviour
 {
     [SerializeField] string buffName;
 
@@ -11,7 +10,7 @@ public class BuffBase : ScriptableObject
     [SerializeField] string description;
 
     [SerializeField] int maxDuration;
-    [SerializeField] int actualDuration;
+    public int actualDuration;
     [SerializeField] int maxCumul;
     [SerializeField] bool clearable;
 
@@ -24,11 +23,6 @@ public class BuffBase : ScriptableObject
     {
         get { return maxDuration; }
     }
-    public int ActualDuration
-    {
-        get { return actualDuration; }
-        set { actualDuration = value; }
-    }
     public int MaxCumul
     {
         get { return maxCumul; }
@@ -38,8 +32,9 @@ public class BuffBase : ScriptableObject
         get { return clearable; }
     }
 
-    protected virtual void AttachEffects(PersonnageScript target)
+    public virtual void AttachEffects(PersonnageScript target)
     {
+        actualDuration = MaxDuration;
         List<BuffBase> buffDuplicates = new List<BuffBase>();
         foreach (BuffBase buff in target.attachedBuffs)
         {
@@ -56,23 +51,22 @@ public class BuffBase : ScriptableObject
         {
             foreach(BuffBase buff in buffDuplicates)
             {
-                buff.ActualDuration = maxDuration;
+                buff.actualDuration = MaxDuration;
+                Destroy(gameObject);
             }
         }
         buffDuplicates.Clear();
     }
 
-    protected virtual void TriggerEffects(PersonnageScript target)
-    {
+    public abstract void TriggerEffects(PersonnageScript target);
 
-    }
-
-    protected virtual void ClearEffects(PersonnageScript target, int turnToClear)
+    public virtual void ClearEffects(PersonnageScript target, int turnToClear)
     {
         actualDuration -= turnToClear;
         if (actualDuration <= 0)
         {
             target.attachedBuffs.Remove(this);
+            Destroy(gameObject);
         }
     }
 }

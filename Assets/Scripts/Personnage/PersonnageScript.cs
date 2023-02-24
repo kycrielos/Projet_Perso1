@@ -7,9 +7,6 @@ public class PersonnageScript : MonoBehaviour
 {
     public PersonnageBase personnage;
 
-    public int actualActionPoint;
-    public int actualMovementPoint;
-
     public float physicalDamage;
     public float specialDamage;
 
@@ -19,12 +16,26 @@ public class PersonnageScript : MonoBehaviour
 
     public SkillBase[] attackSet;
 
+    public float actualAtk;
+    public float actualSpeAtk;
+    public float actualDef;
+    public float actualSpeDef;
+    public float actualActionPoint;
+    public float actualMovementPoint;
+
+
     public List<BuffBase> attachedBuffs = new List<BuffBase>();
+    private List<BuffBase> buffsToClear = new List<BuffBase>();
     // Start is called before the first frame update
     void Start()
     {
+        actualAtk = personnage.Atk;
+        actualSpeAtk = personnage.SpeAtk;
+        actualDef = personnage.Def;
+        actualSpeDef = personnage.SpeDef;
         actualActionPoint = personnage.ActionPoint;
         actualMovementPoint = personnage.MovementPoint;
+
         GameManager.Instance.playerOrder.Add(gameObject);
         text.text = personnage.ActualHp.ToString() + " HP";
         if (personnage.ActualHp <= 0)
@@ -44,6 +55,18 @@ public class PersonnageScript : MonoBehaviour
         actualActionPoint = personnage.ActionPoint;
         actualMovementPoint = personnage.MovementPoint;
         GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+        if (attachedBuffs != null)
+        {
+            foreach(BuffBase buff in attachedBuffs)
+            {
+                buffsToClear.Add(buff);
+            }
+            foreach (BuffBase buff in buffsToClear)
+            {
+                buff.ClearEffects(this, 1);
+            }
+            buffsToClear.Clear();
+        }
         playerturn = false;
     }
 
@@ -61,12 +84,12 @@ public class PersonnageScript : MonoBehaviour
     {
         if (physicalDamage > personnage.bonusPhysicalResistanceFix)
         {
-            personnage.ActualHp -= Mathf.RoundToInt((physicalDamage - personnage.bonusPhysicalResistanceFix) * (100f / (personnage.Def + 100f)));
+            personnage.ActualHp -= Mathf.RoundToInt((physicalDamage - personnage.bonusPhysicalResistanceFix) * (100f / (actualDef + 100f)));
         }
 
         if (specialDamage > personnage.bonusSpecialResistanceFix)
         {
-            personnage.ActualHp -= Mathf.RoundToInt((specialDamage - personnage.bonusSpecialResistanceFix) * (100f / (personnage.SpeDef + 100f)));
+            personnage.ActualHp -= Mathf.RoundToInt((specialDamage - personnage.bonusSpecialResistanceFix) * (100f / (actualSpeDef + 100f)));
         }
 
         physicalDamage = 0;
