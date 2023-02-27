@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f14c0a99d253ab45b573f0d0b3e8165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffName: 
+  buffName: Magic Blast Buff
   description: 
   maxDuration: 2
   actualDuration: 0
   maxCumul: 2
   clearable: 1
-  StatsToChange: 03000000
+  StatsToChange: 05000000
   Value: 14000000
   IsPercentage: 01
   IsStatReduction: 01

@@ -79,9 +79,6 @@ public class GameManager : Singleton<GameManager>
         isDying,
     }
 
-    public delegate void StartTurnEventHandler();
-    public static event StartTurnEventHandler StartTurnEvent;
-
     //when called skip to the next character turn
     public void NextPlayerTurn()
     {
@@ -113,8 +110,19 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public delegate void StartTurnEventHandler();
+    public static event StartTurnEventHandler StartTurnEvent;
+
     protected virtual void RaiseStartTurnEvent()
     {
         StartTurnEvent?.Invoke();
+    }
+
+    public delegate void PlayerAttackedEventHandler();
+    public static event PlayerAttackedEventHandler PlayerAttackedEvent;
+
+    public virtual void RaisePlayerAttackedEvent()
+    {
+        PlayerAttackedEvent?.Invoke();
     }
 }

@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         GameManager.StartTurnEvent += TurnStart;
+        GameManager.PlayerAttackedEvent += UpdateAttackSetButtonState;
 
         StartCoroutine(LateStart(0.01f));
     }
@@ -33,6 +34,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.ActualPlayerState == GameManager.PlayerState.idle)
         {
             GameManager.Instance.actualPlayerAttack = attackSet[buttonNumber];
+            GameManager.Instance.ActualPlayerScript.actualAttackIndex = buttonNumber;
             GameManager.Instance.ActualPlayerState = GameManager.PlayerState.isTargeting;
         }
     }
@@ -51,12 +53,51 @@ public class UIManager : MonoBehaviour
                 attackSetButton[i].GetComponentInChildren<TMP_Text>().text = null;
             }
         }
+        UpdateAttackSetButtonState();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         paText.text = "Pa : " + GameManager.Instance.ActualPlayerScript.actualActionPoint.ToString();
         pmText.text = "Pm : " + GameManager.Instance.ActualPlayerScript.actualMovementPoint.ToString();
+    }
+
+    private void UpdateAttackSetButtonState()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (attackSet[i] != null)
+            {
+                if (attackSet[i].Cost > GameManager.Instance.ActualPlayerScript.actualActionPoint)
+                {
+                    attackSetButton[i].enabled = false;
+                    attackSetButton[i].GetComponent<Image>().color = Color.gray;
+                }
+                else if (attackSet[i].Cooldown > 0)
+                {
+                    if (GameManager.Instance.ActualPlayerScript.attacksActualCooldown[i] > 0)
+                    {
+                        attackSetButton[i].enabled = false;
+                        attackSetButton[i].GetComponent<Image>().color = Color.gray;
+                    }
+                    else
+                    {
+                        attackSetButton[i].enabled = true;
+                        attackSetButton[i].GetComponent<Image>().color = Color.white;
+                    }
+                }
+                else
+                {
+                    attackSetButton[i].enabled = true;
+                    attackSetButton[i].GetComponent<Image>().color = Color.white;
+                }
+            }
+            else
+            {
+                attackSetButton[i].enabled = false;
+                attackSetButton[i].GetComponent<Image>().color = Color.gray;
+            }
+        }
     }
 
     ~UIManager()

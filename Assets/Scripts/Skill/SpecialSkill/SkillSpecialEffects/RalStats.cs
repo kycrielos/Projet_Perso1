@@ -9,10 +9,10 @@ public class RalStats : SpecialEffect
     [SerializeField] GameObject statsChangeObjPrefab;
     GameObject statsChangeObj;
     StatsChange statsChange;
-    public override void Init(PersonnageScript target)
+    public override void Init(GameObject target)
     {
         statsChangeObj = Instantiate(statsChangeObjPrefab);
         statsChange = statsChangeObj.GetComponent<StatsChange>();
-        statsChange.AttachEffects(target);
+        statsChange.AttachEffects(target.GetComponent<PersonnageScript>());
     }
 }

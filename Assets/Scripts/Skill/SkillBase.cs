@@ -15,8 +15,10 @@ public class SkillBase : ScriptableObject
     [SerializeField] int range;
     [SerializeField] int minimumRange;
     [SerializeField] int cost;
-    
+    [SerializeField] int cooldown;
+
     [SerializeField] bool lineOfSight;
+    [SerializeField] bool inLineOnly;
 
     [Tooltip("0 = everything can be target, 1 = square with a target on it only, 2 = empty square only")]
     [SerializeField] int targetingType;
@@ -58,10 +60,18 @@ public class SkillBase : ScriptableObject
     {
         get { return cost; }
     }
+    public int Cooldown
+    {
+        get { return cooldown; }
+    }
 
     public bool LineOfSight
     {
         get { return lineOfSight; }
+    }
+    public bool InLineOnly
+    {
+        get { return inLineOnly; }
     }
 
     public int TargetingType
@@ -74,36 +84,11 @@ public class SkillBase : ScriptableObject
         get { return isPhysical; }
     }
 
-    public void CastSpecialEffects(PersonnageScript target)
+    public void CastSpecialEffects(GameObject target)
     {
         if (effect != null)
         {
             effect.Init(target);
-        }
-    }
-
-    protected void Ralstats(int value, string designatedStats, PersonnageBase target)
-    {
-        switch (designatedStats)
-        {
-            case "atk":
-                target.Atk -= value;
-                break;
-            case "speAtk":
-                target.SpeAtk -= value;
-                break;
-            case "def":
-                target.Def -= value;
-                break;
-            case "speDef":
-                target.SpeDef -= value;
-                break;
-            case "movementPoint":
-                target.MovementPoint -= value;
-                break;
-            case "actionPoint":
-                target.ActionPoint -= value;
-                break;
         }
     }
 

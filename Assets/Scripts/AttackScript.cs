@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AttackScript : MonoBehaviour
 {
-    public SkillBase[] skillBase;
-
     PersonnageBase playerBaseStats;
     PersonnageScript playerScript;
 
@@ -18,12 +16,16 @@ public class AttackScript : MonoBehaviour
         playerBaseStats = playerScript.personnage;
     }
 
-    public void Attack(PersonnageScript targetScript)
+    public void Attack(GameObject target)
     {
         attack = GameManager.Instance.actualPlayerAttack;
-        if (playerScript.actualActionPoint >= attack.Cost)
+
+        if (target.GetComponent<PlayerScript>() != null)
         {
+            PersonnageScript targetScript = target.GetComponent<PlayerScript>();
+
             playerScript.actualActionPoint -= attack.Cost;
+
             if (attack.IsPhysical)
             {
                 targetScript.physicalDamage = (attack.Power * (playerScript.actualAtk + 100) / 100) + playerBaseStats.bonusPhysicalDamageFix;
@@ -33,14 +35,16 @@ public class AttackScript : MonoBehaviour
                 targetScript.specialDamage = (attack.Power * (playerScript.actualSpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
             }
             targetScript.Damaged();
-            attack.CastSpecialEffects(targetScript);
-            GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        attack.CastSpecialEffects(target);
+        GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+
+        if (attack.Cooldown > 0)
+        {
+            playerScript.attacksActualCooldown[playerScript.actualAttackIndex] = attack.Cooldown;
+        }
+
+        GameManager.Instance.RaisePlayerAttackedEvent();
     }
 }

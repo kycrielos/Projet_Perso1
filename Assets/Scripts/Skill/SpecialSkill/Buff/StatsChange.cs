@@ -45,6 +45,14 @@ public class StatsChange : BuffBase
         {
             switch (StatsToChange[i])
             {
+                case Stats.PA:
+                    target.actualActionPoint += Value[i];
+                    target.bonusPA += Value[i];
+                    break;
+                case Stats.PM:
+                    target.actualMovementPoint += Value[i];
+                    target.bonusPM += Value[i];
+                    break;
                 case Stats.Atk:
                     target.actualAtk = Calculator(target.actualAtk, Value[i], IsPercentage[i], IsStatReduction[i]);
                     break;
@@ -70,6 +78,14 @@ public class StatsChange : BuffBase
             {
                 switch (StatsToChange[i])
                 {
+                    case Stats.PA:
+                        target.actualActionPoint -= Value[i];
+                        target.bonusPA -= Value[i];
+                        break;
+                    case Stats.PM:
+                        target.actualMovementPoint -= Value[i];
+                        target.bonusPM -= Value[i];
+                        break;
                     case Stats.Atk:
                         target.actualAtk = RevertCalculator(target.actualAtk, Value[i], IsPercentage[i], IsStatReduction[i]);
                         break;
@@ -144,6 +160,8 @@ public class StatsChange : BuffBase
 
     public enum Stats
     {
+        PA,
+        PM,
         Atk,
         SpeAtk,
         Def,

@@ -14,15 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personnageName: Krycis, the Great Wizard
   description: 
-  personnageRace1: 0
-  personnageRace2: 10
   personnagePowerType: 4
   maxHp: 150
-  actualHp: 150
   atk: 60
-  speAtk: 140
-  def: 70
-  speDef: 140
+  speAtk: 160
+  def: 60
+  speDef: 130
   movementPoint: 3
   actionPoint: 11
   bonusPhysicalDamageFix: 0

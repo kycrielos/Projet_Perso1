@@ -1623,7 +1623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85eb1ab492c4eb54894fd8f5d8e0f20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillBase: []
 --- !u!114 &956959349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1633,7 +1632,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 956959346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ca7e3b0b03dd9647b367c7e59f13efe, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f2d40810f637be44afa3e50a28db7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: 2790525b520bb0c418c2740934a37a48, type: 2}
@@ -1644,15 +1643,21 @@ MonoBehaviour:
   attackSet:
   - {fileID: 11400000, guid: 0b38dd56fc8e77345b46e41fb1cd41af, type: 2}
   - {fileID: 11400000, guid: 0f766d93b4f86b249bc69174738c0188, type: 2}
+  - {fileID: 11400000, guid: cb341aceb3e50c3408301fd9e61c4e89, type: 2}
   - {fileID: 0}
-  - {fileID: 0}
+  attacksActualCooldown: 
+  actualAttackIndex: 0
+  actualHp: 0
   actualAtk: 0
   actualSpeAtk: 0
   actualDef: 0
   actualSpeDef: 0
   actualActionPoint: 0
   actualMovementPoint: 0
+  bonusPM: 0
+  bonusPA: 0
   attachedBuffs: []
+  buffsToClear: []
 --- !u!136 &956959350
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1936,7 +1941,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1071324499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ca7e3b0b03dd9647b367c7e59f13efe, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f2d40810f637be44afa3e50a28db7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: b09c9a98244e33f4581abf5da256f6ca, type: 2}
@@ -1946,16 +1951,22 @@ MonoBehaviour:
   text: {fileID: 459730258}
   attackSet:
   - {fileID: 11400000, guid: e552ee671edcaf348924e4b2945d0b1d, type: 2}
+  - {fileID: 11400000, guid: e954aeccc0da41748964ce4f5520d085, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  attacksActualCooldown: 
+  actualAttackIndex: 0
+  actualHp: 0
   actualAtk: 0
   actualSpeAtk: 0
   actualDef: 0
   actualSpeDef: 0
   actualActionPoint: 0
   actualMovementPoint: 0
+  bonusPM: 0
+  bonusPA: 0
   attachedBuffs: []
+  buffsToClear: []
 --- !u!114 &1071324505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1968,7 +1979,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85eb1ab492c4eb54894fd8f5d8e0f20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillBase: []
 --- !u!114 &1071324506
 MonoBehaviour:
   m_ObjectHideFlags: 0

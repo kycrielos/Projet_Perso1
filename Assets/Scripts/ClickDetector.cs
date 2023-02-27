@@ -66,9 +66,16 @@ public class ClickDetector : MonoBehaviour
                     //Check if the player click on a valid node if not return the player to idle
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (targetCheck())
+                        if (TargetCheck())
                         {
-                            playerAttack.Attack(clickedObjNode.player.GetComponent<PersonnageScript>());
+                            if (clickedObjNode.player != null)
+                            {
+                                playerAttack.Attack(clickedObjNode.player);
+                            }
+                            else
+                            {
+                                playerAttack.Attack(clickedObjNode.nodeObj);
+                            }
                         }
                         else
                         {
@@ -82,7 +89,7 @@ public class ClickDetector : MonoBehaviour
         }
     }
 
-    bool targetCheck()
+    bool TargetCheck()
     {
         //return false if the node can't be a target at all
         if (clickedObjNode.GroundState == GroundStateEnum.nothing || clickedObjNode.GroundState == GroundStateEnum.wall)
@@ -94,7 +101,7 @@ public class ClickDetector : MonoBehaviour
         switch (GameManager.Instance.actualPlayerAttack.TargetingType) //0 = everything can be target, 1 = square with a target on it only, 2 = empty square only
         {
             case 0:
-                if (clickedObjNode.GroundState != GroundStateEnum.player && clickedObjNode.GroundState != GroundStateEnum.targetable)
+                if (clickedObjNode.GroundState != GroundStateEnum.targetablePlayer && clickedObjNode.GroundState != GroundStateEnum.targetable)
                 {
                     return false;
                 }

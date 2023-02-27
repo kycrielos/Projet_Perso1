@@ -15,11 +15,13 @@ MonoBehaviour:
   skillName: Magic Blast
   description: 
   powerType: 4
-  power: 55
+  power: 60
   range: 13
   minimumRange: 1
   cost: 6
+  cooldown: 0
   lineOfSight: 1
+  inLineOnly: 0
   targetingType: 1
   isPhysical: 0
   effect: {fileID: 11400000, guid: 1677baab98684c645918188a1b219e89, type: 2}

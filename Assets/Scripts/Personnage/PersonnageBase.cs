@@ -10,13 +10,9 @@ public class PersonnageBase : ScriptableObject
     [TextArea]
     [SerializeField] string description;
 
-    [SerializeField] PersonnageRace personnageRace1;
-    [SerializeField] PersonnageRace personnageRace2;
-
     [SerializeField] PersonnagePowerType personnagePowerType;
 
     [SerializeField] float maxHp;
-    [SerializeField] float actualHp;
     [SerializeField] float atk;
     [SerializeField] float speAtk;
     [SerializeField] float def;
@@ -42,16 +38,6 @@ public class PersonnageBase : ScriptableObject
         get { return description; }
     }
 
-    public PersonnageRace PersonnageRace1
-    {
-        get { return personnageRace1; }
-    }
-
-    public PersonnageRace PersonnageRace2
-    {
-        get { return personnageRace2; }
-    }
-
     public PersonnagePowerType PersonnagePowerType
     {
         get { return personnagePowerType; }
@@ -61,11 +47,6 @@ public class PersonnageBase : ScriptableObject
     {
         get { return maxHp; }
         set { maxHp = value; }
-    }
-    public float ActualHp
-    {
-        get { return actualHp; }
-        set { actualHp = value; }
     }
 
     public float Atk
@@ -119,22 +100,6 @@ public class LearnableMove
     {
         get { return skillBase; }
     }
-}
-
-
-public enum PersonnageRace
-{
-    Human,
-    Elf,
-    Dwarf,
-    Gnome,
-    Sylvan,
-    Troll,
-    Orc,
-    Gobelin,
-    Ogre,
-    Dragon,
-    None,
 }
 
 public enum PersonnagePowerType

@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personnageName: Varadin, the King of the Humans
   description: 
-  personnageRace1: 0
-  personnageRace2: 10
   personnagePowerType: 6
-  maxHp: 300
-  actualHp: 300
-  atk: 140
+  maxHp: 350
+  atk: 105
   speAtk: 10
   def: 150
   speDef: 120

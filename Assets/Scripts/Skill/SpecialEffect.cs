@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class SpecialEffect : ScriptableObject
 {
-    public abstract void Init(PersonnageScript target);
+    public abstract void Init(GameObject target);
 }

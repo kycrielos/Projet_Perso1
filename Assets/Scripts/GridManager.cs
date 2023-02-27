@@ -174,9 +174,9 @@ public class GridManager : Singleton<GridManager>
                     }
                     else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
                     {
-                        if (actualRange <= GameManager.Instance.actualPlayerAttack.Range && actualRange >= GameManager.Instance.actualPlayerAttack.MinimumRange)
+                        if (CheckRange(actualRange) && CheckLine(n, playerNode))
                         {
-                            if (CheckBox(n))
+                            if (CheckLineOfSight(n))
                             {
                                 _groundtstate = GroundStateEnum.targetablePlayer;
                             }
@@ -192,9 +192,9 @@ public class GridManager : Singleton<GridManager>
                             _player = Physics.OverlapSphere(n.nodeObj.transform.position, nodeRadius, playerMask)[0].gameObject;
                         }
                     }
-                    else if (actualRange <= GameManager.Instance.actualPlayerAttack.Range && actualRange >= GameManager.Instance.actualPlayerAttack.MinimumRange)
+                    else if (CheckRange(actualRange) && CheckLine(n, playerNode))
                     {
-                        if (CheckBox(n))
+                        if (CheckLineOfSight(n))
                         {
                             _groundtstate = GroundStateEnum.targetable;
                         }
@@ -216,15 +216,53 @@ public class GridManager : Singleton<GridManager>
         }
     }
 
-    bool CheckBox(Node n)
+    bool CheckRange(int actualRange)
     {
-        if (Physics.CheckBox(n.colliderObj.transform.position, n.colliderObj.GetComponent<Collider>().bounds.extents / 2, n.colliderObj.transform.rotation, fieldOfViewMask))
+        if (actualRange <= GameManager.Instance.actualPlayerAttack.Range && actualRange >= GameManager.Instance.actualPlayerAttack.MinimumRange)
         {
             return true;
         }
         else
         {
             return false;
+        }
+    }
+
+    bool CheckLine(Node n, Node playerNode)
+    {
+        if (GameManager.Instance.actualPlayerAttack.InLineOnly)
+        {
+            if (n.gridX == playerNode.gridX || n.gridY == playerNode.gridY)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    bool CheckLineOfSight(Node n)
+    {
+        if (GameManager.Instance.actualPlayerAttack.LineOfSight)
+        {
+            if (Physics.CheckBox(n.colliderObj.transform.position, n.colliderObj.GetComponent<Collider>().bounds.extents / 2, n.colliderObj.transform.rotation, fieldOfViewMask))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
         }
     }
 }
