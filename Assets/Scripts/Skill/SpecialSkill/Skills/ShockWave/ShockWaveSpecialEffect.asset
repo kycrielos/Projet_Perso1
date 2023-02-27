@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementType: 1
   playerIsMoved: 0
-  movementValue: 3
+  movementValue: 4
