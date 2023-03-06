@@ -10,21 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7752ba9864af6f4bb6d3a15303c7537, type: 3}
-  m_Name: SwordSlash
+  m_Name: QuickHeal
   m_EditorClassIdentifier: 
-  skillName: Sword Slash
+  skillName: Quick Heal
   description: 
-  powerType: 6
-  power: 70
-  range: 1
-  minimumRange: 1
-  cost: 3
-  cooldown: 0
+  powerType: 0
+  power: 20
+  range: 7
+  minimumRange: 0
+  cost: 2
+  cooldown: 1
   lineOfSight: 1
   inLineOnly: 0
-  targetingType: 1
-  isPhysical: 1
+  targetingType: 0
+  isPhysical: 0
   isAreaEffect: 0
   areaSize: 0
   areaEffectType: 0
+  sustainEffect: 0
+  healingEffect: 1
+  healIsPourcentHp: 0
   effect: []

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 public class ClickDetector : MonoBehaviour
 {
     public GameObject player;
@@ -14,6 +15,10 @@ public class ClickDetector : MonoBehaviour
     public LayerMask mask;
 
     Node clickedObjNode;
+
+    List<Node> area = new List<Node>();
+
+    List<GameObject> areaTarget = new List<GameObject>();
 
     private void Start()
     {
@@ -58,17 +63,44 @@ public class ClickDetector : MonoBehaviour
                         clickedObjNode.IsTarget = false;
                     }
 
+                    if (GameManager.Instance.actualPlayerAttack.IsAreaEffect)
+                    {
+                        if (area != null)
+                        {
+                            foreach (Node n in area)
+                            {
+                                n.IsTarget = false;
+                            }
+                            area.Clear();
+                            areaTarget.Clear();
+                        }
+                    }
+
                     //get the new target node
                     attackTarget = GetClickedGameObject();
                     clickedObjNode = GridManager.Instance.NodeFromWorldPoint(attackTarget.transform.position);
                     clickedObjNode.IsTarget = true;
+
+                    if (GameManager.Instance.actualPlayerAttack.IsAreaEffect)
+                    {
+                        AreaCheck();
+                    }
 
                     //Check if the player click on a valid node if not return the player to idle
                     if (Input.GetMouseButtonDown(0))
                     {
                         if (TargetCheck())
                         {
-                            if (clickedObjNode.player != null)
+                            if (GameManager.Instance.actualPlayerAttack.IsAreaEffect)
+                            {
+                                playerAttack.recastProtection = false;
+                                foreach (GameObject obj in areaTarget)
+                                {
+                                    playerAttack.Attack(obj);
+                                }
+                                GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+                            }
+                            else if (clickedObjNode.player != null)
                             {
                                 playerAttack.Attack(clickedObjNode.player);
                             }
@@ -131,6 +163,136 @@ public class ClickDetector : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public void AreaCheck()
+    {
+        List<Node> neighbours = new List<Node>();
+        area.Add(clickedObjNode);
+        switch (GameManager.Instance.actualPlayerAttack.AreaEffectType)
+        {
+            case SkillBase.AeraType.cross:
+                for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize; i++)
+                {
+                    foreach (Node n in area)
+                    {
+                        foreach (Node n2 in GridManager.Instance.GetNeighbours(n)) 
+                        {
+                            if (!neighbours.Contains(n2))
+                            {
+                                if (n2.gridX == clickedObjNode.gridX || n2.gridY == clickedObjNode.gridY)
+                                {
+                                    neighbours.Add(n2);
+                                    n2.IsTarget = true;
+                                    if (n2.player != null)
+                                    {
+                                        areaTarget.Add(n2.player);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (Node n in neighbours)
+                    {
+                        if (!area.Contains(n))
+                        {
+                            area.Add(n);
+                        }
+                    }
+                }
+                break;
+            case SkillBase.AeraType.star:
+                for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize; i++)
+                {
+                    foreach (Node n in area)
+                    {
+                        foreach (Node n2 in GridManager.Instance.GetNeighbours(n)) 
+                        {
+                            if (!neighbours.Contains(n2))
+                            {
+                                neighbours.Add(n2);
+                                n2.IsTarget = true;
+                                if (n2.player != null)
+                                {
+                                    areaTarget.Add(n2.player);
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (Node n in neighbours)
+                    {
+                        if (!area.Contains(n))
+                        {
+                            area.Add(n);
+                        }
+                    }
+                }
+                break;
+            case SkillBase.AeraType.square :
+                for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize * 2; i++)
+                {
+                    foreach (Node n in area)
+                    {
+                        foreach (Node n2 in GridManager.Instance.GetNeighbours(n))
+                        {
+                            if (!neighbours.Contains(n2))
+                            {
+                                if (Mathf.Abs(n2.gridX - clickedObjNode.gridX) <= GameManager.Instance.actualPlayerAttack.AreaSize && Mathf.Abs(n2.gridY - clickedObjNode.gridY) <= GameManager.Instance.actualPlayerAttack.AreaSize)
+                                {
+                                    neighbours.Add(n2);
+                                    n2.IsTarget = true;
+                                    if (n2.player != null)
+                                    {
+                                        areaTarget.Add(n2.player);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (Node n in neighbours)
+                    {
+                        if (!area.Contains(n))
+                        {
+                            area.Add(n);
+                        }
+                    }
+                }
+                break;
+            case SkillBase.AeraType.diagonal :
+                for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize * 2; i++)
+                {
+                    foreach (Node n in area)
+                    {
+                        foreach (Node n2 in GridManager.Instance.GetNeighbours(n))
+                        {
+                            if (!neighbours.Contains(n2))
+                            {
+                                neighbours.Add(n2);
+                                if (Mathf.Abs(n2.gridX - clickedObjNode.gridX) == Mathf.Abs(n2.gridY - clickedObjNode.gridY))
+                                {
+                                    n2.IsTarget = true;
+                                    if (n2.player != null)
+                                    {
+                                        areaTarget.Add(n2.player);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (Node n in neighbours)
+                    {
+                        if (!area.Contains(n))
+                        {
+                            area.Add(n);
+                        }
+                    }
+                }
+                break;
         }
     }
 

@@ -24,4 +24,8 @@ MonoBehaviour:
   inLineOnly: 0
   targetingType: 0
   isPhysical: 0
-  effect: {fileID: 11400000, guid: 1b1321f5ffae68c4cae37f800d8ac69a, type: 2}
+  isAreaEffect: 0
+  areaSize: 0
+  areaEffectType: 0
+  effect:
+  - {fileID: 11400000, guid: 1b1321f5ffae68c4cae37f800d8ac69a, type: 2}

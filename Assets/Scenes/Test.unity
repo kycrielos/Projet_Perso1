@@ -1623,6 +1623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85eb1ab492c4eb54894fd8f5d8e0f20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recastProtection: 0
 --- !u!114 &956959349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1644,7 +1645,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b38dd56fc8e77345b46e41fb1cd41af, type: 2}
   - {fileID: 11400000, guid: 0f766d93b4f86b249bc69174738c0188, type: 2}
   - {fileID: 11400000, guid: cb341aceb3e50c3408301fd9e61c4e89, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e04c1946786c8dd409c08b18728fa6e4, type: 2}
   attacksActualCooldown: 
   actualAttackIndex: 0
   actualHp: 0
@@ -1952,8 +1953,8 @@ MonoBehaviour:
   attackSet:
   - {fileID: 11400000, guid: e552ee671edcaf348924e4b2945d0b1d, type: 2}
   - {fileID: 11400000, guid: e954aeccc0da41748964ce4f5520d085, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: cdfc9ddd6a5edd846a493605b11c8c00, type: 2}
+  - {fileID: 11400000, guid: 99d09558f0febea438b3e616a2c706af, type: 2}
   attacksActualCooldown: 
   actualAttackIndex: 0
   actualHp: 0
@@ -1979,6 +1980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85eb1ab492c4eb54894fd8f5d8e0f20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recastProtection: 0
 --- !u!114 &1071324506
 MonoBehaviour:
   m_ObjectHideFlags: 0

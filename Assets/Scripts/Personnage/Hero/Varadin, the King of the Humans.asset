@@ -15,11 +15,11 @@ MonoBehaviour:
   personnageName: Varadin, the King of the Humans
   description: 
   personnagePowerType: 6
-  maxHp: 350
-  atk: 105
+  maxHp: 370
+  atk: 95
   speAtk: 10
   def: 150
-  speDef: 120
+  speDef: 125
   movementPoint: 6
   actionPoint: 8
   bonusPhysicalDamageFix: 0

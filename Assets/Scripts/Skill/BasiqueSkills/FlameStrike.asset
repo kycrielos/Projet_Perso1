@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7752ba9864af6f4bb6d3a15303c7537, type: 3}
-  m_Name: SwordSlash
+  m_Name: FlameStrike
   m_EditorClassIdentifier: 
-  skillName: Sword Slash
+  skillName: Flame Strike
   description: 
-  powerType: 6
-  power: 70
-  range: 1
+  powerType: 4
+  power: 50
+  range: 10
   minimumRange: 1
-  cost: 3
+  cost: 4
   cooldown: 0
   lineOfSight: 1
   inLineOnly: 0
-  targetingType: 1
-  isPhysical: 1
-  isAreaEffect: 0
-  areaSize: 0
-  areaEffectType: 0
+  targetingType: 0
+  isPhysical: 0
+  isAreaEffect: 1
+  areaSize: 4
+  areaEffectType: 3
   effect: []

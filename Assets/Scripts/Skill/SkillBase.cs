@@ -24,8 +24,16 @@ public class SkillBase : ScriptableObject
     [SerializeField] int targetingType;
     [SerializeField] bool isPhysical;
 
+    [SerializeField] bool isAreaEffect;
+    [SerializeField] int areaSize;
+    [SerializeField] AeraType areaEffectType;
 
-    [SerializeField] SpecialEffect effect;
+    [SerializeField] bool sustainEffect;
+    [SerializeField] bool healingEffect;
+    [SerializeField] bool healIsPourcentHp;
+
+
+    [SerializeField] List<SpecialEffect> effect = new List<SpecialEffect>();
 
     public string SkillName
     {
@@ -84,12 +92,54 @@ public class SkillBase : ScriptableObject
         get { return isPhysical; }
     }
 
+    public bool IsAreaEffect
+    {
+        get { return isAreaEffect; }
+    }
+
+    public int AreaSize
+    {
+        get { return areaSize; }
+    }
+
+    public AeraType AreaEffectType
+    {
+        get { return areaEffectType; }
+    }
+
+    public bool SustainEffect
+    {
+        get { return sustainEffect; }
+    }
+
+    public bool HealingEffect
+    {
+        get { return healingEffect; }
+    }
+
+    public bool HealIsPourcentHp
+    {
+        get { return healIsPourcentHp; }
+    }
+
+
     public void CastSpecialEffects(GameObject target)
     {
         if (effect != null)
         {
-            effect.Init(target);
+            foreach(SpecialEffect specialEffect in effect)
+            {
+                specialEffect.Init(target);
+            }
         }
     }
 
+
+    public enum AeraType
+    {
+        cross,
+        star,
+        square,
+        diagonal,
+    }
 }

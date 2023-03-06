@@ -9,6 +9,10 @@ public class AttackScript : MonoBehaviour
 
     private SkillBase attack;
 
+    public bool recastProtection;
+
+    private float targetHp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,20 +28,51 @@ public class AttackScript : MonoBehaviour
         {
             PersonnageScript targetScript = target.GetComponent<PlayerScript>();
 
-            playerScript.actualActionPoint -= attack.Cost;
+            targetHp = targetScript.actualHp;
 
-            if (attack.IsPhysical)
+            if (!attack.HealingEffect)
             {
-                targetScript.physicalDamage = (attack.Power * (playerScript.actualAtk + 100) / 100) + playerBaseStats.bonusPhysicalDamageFix;
+                if (attack.IsPhysical)
+                {
+                    targetScript.physicalDamage = (attack.Power * (playerScript.actualAtk + 100) / 100) + playerBaseStats.bonusPhysicalDamageFix;
+                }
+                else
+                {
+                    targetScript.specialDamage = (attack.Power * (playerScript.actualSpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
+                }
+
+                targetScript.Damaged();
+
+                if (attack.SustainEffect)
+                {
+                    playerScript.Healed((targetHp - targetScript.actualHp) / 2);
+                }
             }
             else
             {
-                targetScript.specialDamage = (attack.Power * (playerScript.actualSpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
+                if (attack.HealIsPourcentHp)
+                {
+                    targetScript.Healed(targetScript.personnage.MaxHp * (attack.Power / 100f));
+                }
+                else
+                {
+                    targetScript.Healed((attack.Power * (playerScript.actualSpeAtk + 100) / 100));
+                }
             }
-            targetScript.Damaged();
+
+            if (!recastProtection || !attack.IsAreaEffect)
+            {
+                playerScript.actualActionPoint -= attack.Cost;
+                recastProtection = true;
+            }
+            attack.CastSpecialEffects(target);
+        }
+        else if (attack.TargetingType != 1)
+        {
+            playerScript.actualActionPoint -= attack.Cost;
+            attack.CastSpecialEffects(target);
         }
 
-        attack.CastSpecialEffects(target);
         GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
 
         if (attack.Cooldown > 0)

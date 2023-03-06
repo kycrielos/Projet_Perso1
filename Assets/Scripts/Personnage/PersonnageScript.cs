@@ -95,9 +95,9 @@ public abstract class PersonnageScript : MonoBehaviour
         playerturn = false;
     }
 
-    public void Healed(int value)
+    public void Healed(float value)
     {
-        actualHp += value;
+        actualHp += Mathf.Round(value);
         if (actualHp > personnage.MaxHp)
         {
             actualHp = personnage.MaxHp;
@@ -110,12 +110,12 @@ public abstract class PersonnageScript : MonoBehaviour
     {
         if (physicalDamage > personnage.bonusPhysicalResistanceFix)
         {
-            actualHp -= Mathf.RoundToInt((physicalDamage - personnage.bonusPhysicalResistanceFix) * (100f / (actualDef + 100f)));
+            actualHp -= Mathf.Round((physicalDamage - personnage.bonusPhysicalResistanceFix) * (100f / (actualDef + 100f)));
         }
 
         if (specialDamage > personnage.bonusSpecialResistanceFix)
         {
-            actualHp -= Mathf.RoundToInt((specialDamage - personnage.bonusSpecialResistanceFix) * (100f / (actualSpeDef + 100f)));
+            actualHp -= Mathf.Round((specialDamage - personnage.bonusSpecialResistanceFix) * (100f / (actualSpeDef + 100f)));
         }
 
         physicalDamage = 0;
@@ -125,6 +125,7 @@ public abstract class PersonnageScript : MonoBehaviour
 
         if (actualHp <= 0)
         {
+            actualHp = 0;
             Killed();
         }
     }

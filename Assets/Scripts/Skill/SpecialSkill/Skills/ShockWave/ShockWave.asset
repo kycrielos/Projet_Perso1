@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: Shock Wave
   description: 
   powerType: 6
-  power: 25
+  power: 30
   range: 7
   minimumRange: 1
   cost: 4
@@ -24,4 +24,11 @@ MonoBehaviour:
   inLineOnly: 1
   targetingType: 1
   isPhysical: 0
-  effect: {fileID: 11400000, guid: 67ef98fc44320d947b5d3b4cf2d9a05d, type: 2}
+  isAreaEffect: 0
+  areaSize: 0
+  areaEffectType: 0
+  sustainEffect: 0
+  healingEffect: 0
+  healIsPourcentHp: 0
+  effect:
+  - {fileID: 11400000, guid: 67ef98fc44320d947b5d3b4cf2d9a05d, type: 2}
