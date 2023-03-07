@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static readonly Lazy<T> LazyInstance = new Lazy<T>(CreateSingleton);
@@ -77,6 +78,17 @@ public class GameManager : Singleton<GameManager>
         isTargeting,
         isAttacking,
         isDying,
+    }
+    private void Start()
+    {
+        StartCoroutine(LateStart(0.01f));
+    }
+    IEnumerator LateStart(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        playerOrder = (playerOrder.OrderByDescending(player => player.GetComponent<PlayerScript>().personnage.Initiative)).ToList();
+        ActualPlayerScript.StartTurn();
+        RaiseStartTurnEvent();
     }
 
     //when called skip to the next character turn

@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b223b9219801f824f9b237969706be16, type: 3}
+  m_Name: ViciousBladeSpecialEffect
+  m_EditorClassIdentifier: 
+  bleedingBuffObjPrefab: {fileID: 9143007606028370652, guid: 6331065e20238034f8cade345c319842, type: 3}

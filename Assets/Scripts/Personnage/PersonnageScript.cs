@@ -25,6 +25,8 @@ public abstract class PersonnageScript : MonoBehaviour
     public float actualSpeDef;
     public float actualActionPoint;
     public float actualMovementPoint;
+    public float bonusPhysicalDamageFix;
+    public float bonusSpecialDamageFix;
 
     public float bonusPM;
     public float bonusPA;
@@ -32,6 +34,9 @@ public abstract class PersonnageScript : MonoBehaviour
 
     public List<BuffBase> attachedBuffs = new List<BuffBase>();
     public List<BuffBase> buffsToClear = new List<BuffBase>();
+    public List<GlyphBase> possessedGlyph = new List<GlyphBase>();
+
+    bool destroyed;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +49,9 @@ public abstract class PersonnageScript : MonoBehaviour
         actualDef = personnage.Def;
         actualSpeDef = personnage.SpeDef;
         actualActionPoint = personnage.ActionPoint;
-        actualMovementPoint = personnage.MovementPoint; 
+        actualMovementPoint = personnage.MovementPoint;
+        bonusPhysicalDamageFix = personnage.bonusPhysicalDamageFix;
+        bonusSpecialDamageFix = personnage.bonusSpecialDamageFix;
 
         GameManager.Instance.playerOrder.Add(gameObject);
         text.text = actualHp.ToString() + " HP";
@@ -60,6 +67,24 @@ public abstract class PersonnageScript : MonoBehaviour
         actualActionPoint = personnage.ActionPoint + bonusPA;
         actualMovementPoint = personnage.MovementPoint + bonusPM;
         GridManager.Instance.UpdateGridState();
+        if (attachedBuffs.Count != 0)
+        {
+            foreach (BuffBase buff in attachedBuffs)
+            {
+                buff.TriggerEffects(this);
+                if (destroyed)
+                {
+                    break;
+                }
+            }
+        }
+        if (possessedGlyph.Count != 0)
+        {
+            foreach (GlyphBase glyph in possessedGlyph)
+            {
+                glyph.ActualDuration += 1;
+            }
+        }
     }
 
 
@@ -90,6 +115,11 @@ public abstract class PersonnageScript : MonoBehaviour
                     }
                 }
             }
+        }
+        Node playerNode = GridManager.Instance.NodeFromWorldPoint(transform.position); //get player Node
+        if (playerNode.glyhpScript != null)
+        {
+            playerNode.glyhpScript.TriggerEffect(this);
         }
         
         playerturn = false;
@@ -136,6 +166,17 @@ public abstract class PersonnageScript : MonoBehaviour
         {
             GameManager.Instance.NextPlayerTurn();
         }
+        foreach (BuffBase buffToClear in attachedBuffs)
+        {
+            Destroy(buffToClear.gameObject, 0.1f);
+        }
+        foreach (GlyphBase glyph in possessedGlyph)
+        {
+            Destroy(glyph.gameObject, 0.1f);
+        }
+        attachedBuffs.Clear();
+        possessedGlyph.Clear();
+        destroyed = true;
         GameManager.Instance.RemoveFromIndex(gameObject);
         Destroy(gameObject);
     }

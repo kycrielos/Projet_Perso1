@@ -7,12 +7,20 @@ using UnityEngine;
 public class RalStats : SpecialEffect
 {
     [SerializeField] GameObject statsChangeObjPrefab;
+    [SerializeField] bool alwaysTargetPlayer;
     GameObject statsChangeObj;
     StatsChange statsChange;
     public override void Init(GameObject target)
     {
         statsChangeObj = Instantiate(statsChangeObjPrefab);
         statsChange = statsChangeObj.GetComponent<StatsChange>();
-        statsChange.AttachEffects(target.GetComponent<PersonnageScript>());
+        if (alwaysTargetPlayer)
+        {
+            statsChange.AttachEffects(GameManager.Instance.ActualPlayerScript);
+        }
+        else
+        {
+            statsChange.AttachEffects(target.GetComponent<PersonnageScript>());
+        }
     }
 }

@@ -19,6 +19,7 @@ public class PersonnageBase : ScriptableObject
     [SerializeField] float speDef;
     [SerializeField] float movementPoint;
     [SerializeField] float actionPoint;
+    [SerializeField] float initiative;
 
     public float bonusPhysicalDamageFix;
     public float bonusSpecialDamageFix;
@@ -46,43 +47,41 @@ public class PersonnageBase : ScriptableObject
     public float MaxHp
     {
         get { return maxHp; }
-        set { maxHp = value; }
     }
 
     public float Atk
     {
         get { return atk; }
-        set { atk = value; }
     }
 
     public float SpeAtk
     {
         get { return speAtk; }
-        set { speAtk = value; }
     }
 
     public float Def
     {
         get { return def; }
-        set { def = value; }
     }
 
     public float SpeDef
     {
         get { return speDef; }
-        set { speDef = value; }
+    }
+
+    public float Initiative
+    {
+        get { return initiative; }
     }
 
     public float MovementPoint
     {
         get { return movementPoint; }
-        set { movementPoint = value; }
     }
 
     public float ActionPoint
     {
         get { return actionPoint; }
-        set { actionPoint = value; }
     }
 
     public List<LearnableMove> LearnableMoves

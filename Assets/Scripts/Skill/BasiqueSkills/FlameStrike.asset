@@ -23,8 +23,10 @@ MonoBehaviour:
   lineOfSight: 1
   inLineOnly: 0
   targetingType: 0
-  isPhysical: 0
-  isAreaEffect: 1
+  damageType: 2
+  sustainEffect: 0
+  healIsPourcentHp: 0
+  areaEffectType: 4
   areaSize: 4
-  areaEffectType: 3
+  areaAffectPlayer: 1
   effect: []

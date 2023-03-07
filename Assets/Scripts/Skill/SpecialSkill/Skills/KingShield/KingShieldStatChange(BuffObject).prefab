@@ -51,6 +51,6 @@ MonoBehaviour:
   maxCumul: 1
   clearable: 1
   StatsToChange: 0400000005000000
-  Value: 1400000014000000
+  Value: 1e00000014000000
   IsPercentage: 0101
   IsStatReduction: 0000

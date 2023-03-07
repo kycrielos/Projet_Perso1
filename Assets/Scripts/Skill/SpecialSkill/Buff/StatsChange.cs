@@ -25,7 +25,55 @@ public class StatsChange : BuffBase
         {
             target.attachedBuffs.Add(this);
 
-            TriggerEffects(target);
+
+            for (int i = 0; i < StatsToChange.Length; i++)
+            {
+                switch (StatsToChange[i])
+                {
+                    case Stats.PA:
+                        if (IsStatReduction[i])
+                        {
+                            target.actualActionPoint -= Value[i];
+                            target.bonusPA -= Value[i];
+                        }
+                        else
+                        {
+                            target.actualActionPoint += Value[i];
+                            target.bonusPA += Value[i];
+                        }
+                        break;
+                    case Stats.PM:
+                        if (IsStatReduction[i])
+                        {
+                            target.actualMovementPoint -= Value[i];
+                            target.bonusPM -= Value[i];
+                        }
+                        else
+                        {
+                            target.actualMovementPoint += Value[i];
+                            target.bonusPM += Value[i];
+                        }
+                        break;
+                    case Stats.Atk:
+                        target.actualAtk = Calculator(target.actualAtk, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                    case Stats.SpeAtk:
+                        target.actualSpeAtk = Calculator(target.actualSpeAtk, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                    case Stats.Def:
+                        target.actualDef = Calculator(target.actualDef, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                    case Stats.SpeDef:
+                        target.actualSpeDef = Calculator(target.actualSpeDef, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                    case Stats.bonusPhysicalDamageFix:
+                        target.bonusPhysicalDamageFix = Calculator(target.bonusPhysicalDamageFix, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                    case Stats.bonusSpecialDamageFix:
+                        target.bonusSpecialDamageFix = Calculator(target.bonusSpecialDamageFix, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                }
+            }
         }
         else
         {
@@ -40,33 +88,6 @@ public class StatsChange : BuffBase
 
     public override void TriggerEffects(PersonnageScript target)
     {
-
-        for (int i = 0; i < StatsToChange.Length; i++)
-        {
-            switch (StatsToChange[i])
-            {
-                case Stats.PA:
-                    target.actualActionPoint += Value[i];
-                    target.bonusPA += Value[i];
-                    break;
-                case Stats.PM:
-                    target.actualMovementPoint += Value[i];
-                    target.bonusPM += Value[i];
-                    break;
-                case Stats.Atk:
-                    target.actualAtk = Calculator(target.actualAtk, Value[i], IsPercentage[i], IsStatReduction[i]);
-                    break;
-                case Stats.SpeAtk:
-                    target.actualSpeAtk = Calculator(target.actualSpeAtk, Value[i], IsPercentage[i], IsStatReduction[i]);
-                    break;
-                case Stats.Def:
-                    target.actualDef = Calculator(target.actualDef, Value[i], IsPercentage[i], IsStatReduction[i]);
-                    break;
-                case Stats.SpeDef:
-                    target.actualSpeDef = Calculator(target.actualSpeDef, Value[i], IsPercentage[i], IsStatReduction[i]);
-                    break;
-            }
-        }
     }
 
     public override void ClearEffects(PersonnageScript target, int turnToClear)
@@ -78,13 +99,30 @@ public class StatsChange : BuffBase
             {
                 switch (StatsToChange[i])
                 {
+
                     case Stats.PA:
-                        target.actualActionPoint -= Value[i];
-                        target.bonusPA -= Value[i];
+                        if (IsStatReduction[i])
+                        {
+                            target.actualActionPoint += Value[i];
+                            target.bonusPA += Value[i];
+                        }
+                        else
+                        {
+                            target.actualActionPoint -= Value[i];
+                            target.bonusPA -= Value[i];
+                        }
                         break;
                     case Stats.PM:
-                        target.actualMovementPoint -= Value[i];
-                        target.bonusPM -= Value[i];
+                        if (IsStatReduction[i])
+                        {
+                            target.actualMovementPoint += Value[i];
+                            target.bonusPM += Value[i];
+                        }
+                        else
+                        {
+                            target.actualMovementPoint -= Value[i];
+                            target.bonusPM -= Value[i];
+                        }
                         break;
                     case Stats.Atk:
                         target.actualAtk = RevertCalculator(target.actualAtk, Value[i], IsPercentage[i], IsStatReduction[i]);
@@ -97,6 +135,12 @@ public class StatsChange : BuffBase
                         break;
                     case Stats.SpeDef:
                         target.actualSpeDef = RevertCalculator(target.actualSpeDef, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                    case Stats.bonusPhysicalDamageFix:
+                        target.bonusPhysicalDamageFix = RevertCalculator(target.bonusPhysicalDamageFix, Value[i], IsPercentage[i], IsStatReduction[i]);
+                        break;
+                    case Stats.bonusSpecialDamageFix:
+                        target.bonusSpecialDamageFix = RevertCalculator(target.bonusSpecialDamageFix, Value[i], IsPercentage[i], IsStatReduction[i]);
                         break;
                 }
             }
@@ -116,7 +160,7 @@ public class StatsChange : BuffBase
             }
             else
             {
-                return baseValue  * (1 + value / 100);
+                return baseValue  * (1f + value / 100f);
             }
         }
         else
@@ -166,5 +210,7 @@ public class StatsChange : BuffBase
         SpeAtk,
         Def,
         SpeDef,
+        bonusPhysicalDamageFix,
+        bonusSpecialDamageFix,
     }
 }

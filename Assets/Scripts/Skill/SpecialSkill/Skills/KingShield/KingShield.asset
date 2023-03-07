@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: King Shield
   description: 
   powerType: 6
-  power: 15
+  power: 20
   range: 0
   minimumRange: 0
   cost: 5
@@ -23,12 +23,10 @@ MonoBehaviour:
   lineOfSight: 0
   inLineOnly: 0
   targetingType: 0
-  isPhysical: 0
-  isAreaEffect: 0
-  areaSize: 0
-  areaEffectType: 0
+  damageType: 3
   sustainEffect: 0
-  healingEffect: 1
   healIsPourcentHp: 1
+  areaEffectType: 0
+  areaSize: 0
   effect:
   - {fileID: 11400000, guid: 0261223314d060b45b4f0cf91ea836d6, type: 2}

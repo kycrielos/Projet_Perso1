@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7752ba9864af6f4bb6d3a15303c7537, type: 3}
+  m_Name: TiringRay
+  m_EditorClassIdentifier: 
+  skillName: tiring Ray
+  description: 
+  powerType: 5
+  power: 50
+  range: 7
+  minimumRange: 1
+  cost: 4
+  cooldown: 0
+  lineOfSight: 1
+  inLineOnly: 1
+  targetingType: 1
+  damageType: 2
+  sustainEffect: 0
+  healIsPourcentHp: 0
+  areaEffectType: 0
+  areaSize: 0
+  areaAffectPlayer: 0
+  effect:
+  - {fileID: 11400000, guid: 51f2bfb0a8955264c8e7d0cdff224f6d, type: 2}

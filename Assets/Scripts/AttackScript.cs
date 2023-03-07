@@ -28,39 +28,47 @@ public class AttackScript : MonoBehaviour
         {
             PersonnageScript targetScript = target.GetComponent<PlayerScript>();
 
-            targetHp = targetScript.actualHp;
 
-            if (!attack.HealingEffect)
-            {
-                if (attack.IsPhysical)
-                {
-                    targetScript.physicalDamage = (attack.Power * (playerScript.actualAtk + 100) / 100) + playerBaseStats.bonusPhysicalDamageFix;
-                }
-                else
-                {
-                    targetScript.specialDamage = (attack.Power * (playerScript.actualSpeAtk + 100) / 100) + playerBaseStats.bonusSpecialDamageFix;
-                }
+            switch (attack.DamageType)
+            {   
+                case SkillBase.DamagingType.physical:
+                    
+                    targetHp = targetScript.actualHp;
+                    targetScript.physicalDamage = (attack.Power * (playerScript.actualAtk + 100) / 100) - attack.Power + playerScript.bonusPhysicalDamageFix;
+                    targetScript.Damaged();
 
-                targetScript.Damaged();
+                    if (attack.SustainEffect)
+                    {
+                        playerScript.Healed((targetHp - targetScript.actualHp) / 2);
+                    }
+                    break;
 
-                if (attack.SustainEffect)
-                {
-                    playerScript.Healed((targetHp - targetScript.actualHp) / 2);
-                }
+                case SkillBase.DamagingType.special:
+
+                    targetHp = targetScript.actualHp;
+                    targetScript.specialDamage = (attack.Power * (playerScript.actualSpeAtk + 100) / 100) - attack.Power + playerScript.bonusSpecialDamageFix;
+                    targetScript.Damaged();
+
+                    if (attack.SustainEffect)
+                    {
+                        playerScript.Healed((targetHp - targetScript.actualHp) / 2);
+                    }
+                    break;
+
+                case SkillBase.DamagingType.heal:
+
+                    if (attack.HealIsPourcentHp)
+                    {
+                        targetScript.Healed(targetScript.personnage.MaxHp * (attack.Power / 100f));
+                    }
+                    else
+                    {
+                        targetScript.Healed((attack.Power * (playerScript.actualSpeAtk + 100) / 100));
+                    }
+                    break;
             }
-            else
-            {
-                if (attack.HealIsPourcentHp)
-                {
-                    targetScript.Healed(targetScript.personnage.MaxHp * (attack.Power / 100f));
-                }
-                else
-                {
-                    targetScript.Healed((attack.Power * (playerScript.actualSpeAtk + 100) / 100));
-                }
-            }
 
-            if (!recastProtection || !attack.IsAreaEffect)
+            if (!recastProtection || attack.AreaEffectType == SkillBase.AeraType.none)
             {
                 playerScript.actualActionPoint -= attack.Cost;
                 recastProtection = true;

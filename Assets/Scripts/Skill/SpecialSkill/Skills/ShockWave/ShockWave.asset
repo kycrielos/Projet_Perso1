@@ -23,12 +23,10 @@ MonoBehaviour:
   lineOfSight: 1
   inLineOnly: 1
   targetingType: 1
-  isPhysical: 0
-  isAreaEffect: 0
-  areaSize: 0
-  areaEffectType: 0
+  damageType: 2
   sustainEffect: 0
-  healingEffect: 0
   healIsPourcentHp: 0
+  areaEffectType: 0
+  areaSize: 0
   effect:
   - {fileID: 11400000, guid: 67ef98fc44320d947b5d3b4cf2d9a05d, type: 2}

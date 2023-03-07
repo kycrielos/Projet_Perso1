@@ -15,13 +15,14 @@ MonoBehaviour:
   personnageName: Krycis, the Great Wizard
   description: 
   personnagePowerType: 4
-  maxHp: 150
-  atk: 60
-  speAtk: 160
-  def: 60
+  maxHp: 200
+  atk: 50
+  speAtk: 170
+  def: 50
   speDef: 130
   movementPoint: 3
   actionPoint: 11
+  initiative: 40
   bonusPhysicalDamageFix: 0
   bonusSpecialDamageFix: 0
   bonusPhysicalResistanceFix: 0

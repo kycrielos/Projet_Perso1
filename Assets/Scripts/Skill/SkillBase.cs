@@ -22,15 +22,14 @@ public class SkillBase : ScriptableObject
 
     [Tooltip("0 = everything can be target, 1 = square with a target on it only, 2 = empty square only")]
     [SerializeField] int targetingType;
-    [SerializeField] bool isPhysical;
 
-    [SerializeField] bool isAreaEffect;
-    [SerializeField] int areaSize;
-    [SerializeField] AeraType areaEffectType;
-
+    [SerializeField] DamagingType damageType;
     [SerializeField] bool sustainEffect;
-    [SerializeField] bool healingEffect;
     [SerializeField] bool healIsPourcentHp;
+
+    [SerializeField] AeraType areaEffectType;
+    [SerializeField] int areaSize;
+    [SerializeField] bool areaAffectPlayer;
 
 
     [SerializeField] List<SpecialEffect> effect = new List<SpecialEffect>();
@@ -87,16 +86,6 @@ public class SkillBase : ScriptableObject
         get { return targetingType; }
     }
 
-    public bool IsPhysical
-    {
-        get { return isPhysical; }
-    }
-
-    public bool IsAreaEffect
-    {
-        get { return isAreaEffect; }
-    }
-
     public int AreaSize
     {
         get { return areaSize; }
@@ -112,14 +101,18 @@ public class SkillBase : ScriptableObject
         get { return sustainEffect; }
     }
 
-    public bool HealingEffect
+    public DamagingType DamageType
     {
-        get { return healingEffect; }
+        get { return damageType; }
     }
 
     public bool HealIsPourcentHp
     {
         get { return healIsPourcentHp; }
+    }
+    public bool AreaAffectPlayer
+    {
+        get { return areaAffectPlayer; }
     }
 
 
@@ -134,9 +127,18 @@ public class SkillBase : ScriptableObject
         }
     }
 
+    public enum DamagingType
+    {
+        nothing,
+        physical,
+        special,
+        heal,
+    }
+
 
     public enum AeraType
     {
+        none,
         cross,
         star,
         square,

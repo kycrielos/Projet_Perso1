@@ -68,8 +68,11 @@ public class Node
 	public Node parent;
 
 	private bool isTarget;
+	private bool areaTarget;
 
 	public GameObject player;
+
+	public GlyphBase glyhpScript;
 
 	public bool IsTarget
 	{
@@ -85,9 +88,32 @@ public class Node
 			}
 			else if (groundState == GroundStateEnum.noView)
 			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.red;
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(130, 30, 0, 1) : Color.red;
 			}
 			else if(groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
+			{
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(130, 30, 0, 1) : Color.gray;
+			}
+		}
+	}
+
+	public bool AreaTarget
+	{
+		get { return areaTarget; }
+		set
+		{
+			areaTarget = value;
+
+			//if the square is targeted change its color
+			if (groundState == GroundStateEnum.targetable || groundState == GroundStateEnum.targetablePlayer)
+			{
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.cyan;
+			}
+			else if (groundState == GroundStateEnum.noView)
+			{
+				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.red;
+			}
+			else if (groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
 			{
 				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.gray;
 			}

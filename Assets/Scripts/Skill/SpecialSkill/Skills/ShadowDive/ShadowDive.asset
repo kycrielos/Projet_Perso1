@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7752ba9864af6f4bb6d3a15303c7537, type: 3}
+  m_Name: ShadowDive
+  m_EditorClassIdentifier: 
+  skillName: ShadowDive
+  description: 
+  powerType: 6
+  power: 0
+  range: 3
+  minimumRange: 1
+  cost: 5
+  cooldown: 2
+  lineOfSight: 0
+  inLineOnly: 1
+  targetingType: 2
+  damageType: 0
+  sustainEffect: 0
+  healIsPourcentHp: 0
+  areaEffectType: 0
+  areaSize: 0
+  effect:
+  - {fileID: 11400000, guid: 509a7e290319c274d9936f5356cc5c15, type: 2}
+  - {fileID: 11400000, guid: ec67333802c3e4647b0610a8b45661a7, type: 2}

@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
         GameManager.StartTurnEvent += TurnStart;
         GameManager.PlayerAttackedEvent += UpdateAttackSetButtonState;
 
-        StartCoroutine(LateStart(0.01f));
+        //StartCoroutine(LateStart(0.03f));
     }
     IEnumerator LateStart(float waitTime)
     {
