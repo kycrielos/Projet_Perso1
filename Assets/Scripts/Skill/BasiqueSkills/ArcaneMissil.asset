@@ -15,17 +15,18 @@ MonoBehaviour:
   skillName: Arcane Missil
   description: 
   powerType: 4
-  power: 70
+  power: 40
   range: 15
   minimumRange: 3
   cost: 4
   cooldown: 0
   lineOfSight: 1
   inLineOnly: 0
-  targetingType: 1
+  targetingType: 0
   damageType: 2
   sustainEffect: 0
   healIsPourcentHp: 0
-  areaEffectType: 0
-  areaSize: 0
+  areaEffectType: 3
+  areaSize: 2
+  areaAffectPlayer: 0
   effect: []

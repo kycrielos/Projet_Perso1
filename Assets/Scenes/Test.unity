@@ -760,7 +760,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5d33a24963fe3924a80eccfcde71d217, type: 2}
   - {fileID: 11400000, guid: f02baa1157901bd42bb70c092a5ef196, type: 2}
   - {fileID: 11400000, guid: 2538ecf68bf965542b9e0c7cffdee5d3, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f4819f2a2e72341499b736615aaaf6de, type: 2}
   attacksActualCooldown: 
   actualAttackIndex: 0
   actualHp: 0

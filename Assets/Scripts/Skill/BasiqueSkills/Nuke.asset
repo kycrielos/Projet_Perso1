@@ -10,24 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7752ba9864af6f4bb6d3a15303c7537, type: 3}
-  m_Name: TiringRay
+  m_Name: Nuke
   m_EditorClassIdentifier: 
-  skillName: Tiring Ray
+  skillName: Nuke
   description: 
   powerType: 5
-  power: 50
+  power: 45
   range: 7
-  minimumRange: 1
+  minimumRange: 3
   cost: 4
   cooldown: 0
   lineOfSight: 1
-  inLineOnly: 1
+  inLineOnly: 0
   targetingType: 1
   damageType: 2
   sustainEffect: 0
   healIsPourcentHp: 0
-  areaEffectType: 0
-  areaSize: 0
+  areaEffectType: 2
+  areaSize: 2
   areaAffectPlayer: 0
-  effect:
-  - {fileID: 11400000, guid: 51f2bfb0a8955264c8e7d0cdff224f6d, type: 2}
+  effect: []
