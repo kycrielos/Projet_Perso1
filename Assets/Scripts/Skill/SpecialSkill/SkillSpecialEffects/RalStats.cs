@@ -16,7 +16,7 @@ public class RalStats : SpecialEffect
         statsChange = statsChangeObj.GetComponent<StatsChange>();
         if (alwaysTargetPlayer)
         {
-            statsChange.AttachEffects(GameManager.Instance.ActualPlayerScript);
+            statsChange.AttachEffects(CombatManager.Instance.ActualPlayerScript);
         }
         else
         {

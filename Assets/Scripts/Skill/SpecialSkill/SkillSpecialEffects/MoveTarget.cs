@@ -17,7 +17,7 @@ public class MoveTarget : SpecialEffect
 
     public override void Init(GameObject target)
     {
-        player = GameManager.Instance.ActualPlayer;
+        player = CombatManager.Instance.ActualPlayer;
         playerNode = GridManager.Instance.NodeFromWorldPoint(player.transform.position);
         targetNode = GridManager.Instance.NodeFromWorldPoint(target.transform.position);
         if (playerIsMoved)

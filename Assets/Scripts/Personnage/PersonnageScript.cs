@@ -7,6 +7,8 @@ public abstract class PersonnageScript : MonoBehaviour
 {
     public PersonnageBase personnage;
 
+    public bool isAI;
+
     public float physicalDamage;
     public float specialDamage;
 
@@ -53,7 +55,7 @@ public abstract class PersonnageScript : MonoBehaviour
         bonusPhysicalDamageFix = personnage.bonusPhysicalDamageFix;
         bonusSpecialDamageFix = personnage.bonusSpecialDamageFix;
 
-        GameManager.Instance.playerOrder.Add(gameObject);
+        CombatManager.Instance.playerOrder.Add(gameObject);
         text.text = actualHp.ToString() + " HP";
         if (actualHp <= 0)
         {
@@ -90,7 +92,7 @@ public abstract class PersonnageScript : MonoBehaviour
 
     public virtual void EndTurn()
     {
-        GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
         if (attachedBuffs != null)
         {
             foreach (BuffBase buff in attachedBuffs)
@@ -164,7 +166,7 @@ public abstract class PersonnageScript : MonoBehaviour
     {
         if (playerturn)
         {
-            GameManager.Instance.NextPlayerTurn();
+            CombatManager.Instance.NextPlayerTurn();
         }
         foreach (BuffBase buffToClear in attachedBuffs)
         {
@@ -177,7 +179,7 @@ public abstract class PersonnageScript : MonoBehaviour
         attachedBuffs.Clear();
         possessedGlyph.Clear();
         destroyed = true;
-        GameManager.Instance.RemoveFromIndex(gameObject);
+        CombatManager.Instance.RemoveFromIndex(gameObject);
         Destroy(gameObject);
     }
 }

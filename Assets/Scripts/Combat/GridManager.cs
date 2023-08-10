@@ -109,14 +109,14 @@ public class GridManager : Singleton<GridManager>
     bool MaxDistanceCheck(Node n)
     {
         PathFinding.Instance.target = n.nodeObj.transform;
-        PathFinding.Instance.FindPath(GameManager.Instance.ActualPlayer.transform.position, n.nodeObj.transform.position);
-        return (path.Count > GameManager.Instance.ActualPlayerScript.actualMovementPoint);
+        PathFinding.Instance.FindPath(CombatManager.Instance.ActualPlayer.transform.position, n.nodeObj.transform.position);
+        return (path.Count > CombatManager.Instance.ActualPlayerScript.actualMovementPoint);
     }
     public void UpdateGridState()
     {
-        switch (GameManager.Instance.ActualPlayerState)
+        switch (CombatManager.Instance.ActualPlayerState)
         {
-            case GameManager.PlayerState.idle:
+            case CombatManager.PlayerState.idle:
                 foreach (Node n in grid)
                 {
                     if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
@@ -138,7 +138,7 @@ public class GridManager : Singleton<GridManager>
                     n.player = _player;
                 }
 
-                nodeToCheck.Add(NodeFromWorldPoint(GameManager.Instance.ActualPlayer.transform.position));
+                nodeToCheck.Add(NodeFromWorldPoint(CombatManager.Instance.ActualPlayer.transform.position));
                 while (nodeToCheck.Count > 0)
                 {
                     Node node = nodeToCheck[0];
@@ -161,11 +161,11 @@ public class GridManager : Singleton<GridManager>
                     nodeToCheck.Remove(node);
                 }
                 break;
-            case GameManager.PlayerState.isTargeting:
+            case CombatManager.PlayerState.isTargeting:
 
                 foreach (Node n in grid)
                 {
-                    Node playerNode = NodeFromWorldPoint(GameManager.Instance.ActualPlayer.transform.position); //get player Node
+                    Node playerNode = NodeFromWorldPoint(CombatManager.Instance.ActualPlayer.transform.position); //get player Node
                     int actualRange = Mathf.Abs(n.gridX - playerNode.gridX) + Mathf.Abs(n.gridY - playerNode.gridY);
                     if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
                     {
@@ -218,7 +218,7 @@ public class GridManager : Singleton<GridManager>
 
     bool CheckRange(int actualRange)
     {
-        if (actualRange <= GameManager.Instance.actualPlayerAttack.Range && actualRange >= GameManager.Instance.actualPlayerAttack.MinimumRange)
+        if (actualRange <= CombatManager.Instance.actualPlayerAttack.Range && actualRange >= CombatManager.Instance.actualPlayerAttack.MinimumRange)
         {
             return true;
         }
@@ -230,7 +230,7 @@ public class GridManager : Singleton<GridManager>
 
     bool CheckLine(Node n, Node playerNode)
     {
-        if (GameManager.Instance.actualPlayerAttack.InLineOnly)
+        if (CombatManager.Instance.actualPlayerAttack.InLineOnly)
         {
             if (n.gridX == playerNode.gridX || n.gridY == playerNode.gridY)
             {
@@ -249,7 +249,7 @@ public class GridManager : Singleton<GridManager>
 
     bool CheckLineOfSight(Node n)
     {
-        if (GameManager.Instance.actualPlayerAttack.LineOfSight)
+        if (CombatManager.Instance.actualPlayerAttack.LineOfSight)
         {
             if (Physics.CheckBox(n.colliderObj.transform.position, n.colliderObj.GetComponent<Collider>().bounds.extents / 2, n.colliderObj.transform.rotation, fieldOfViewMask))
             {

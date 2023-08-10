@@ -22,7 +22,7 @@ public class AttackScript : MonoBehaviour
 
     public void Attack(GameObject target)
     {
-        attack = GameManager.Instance.actualPlayerAttack;
+        attack = CombatManager.Instance.actualPlayerAttack;
 
         if (target.GetComponent<PlayerScript>() != null)
         {
@@ -81,13 +81,13 @@ public class AttackScript : MonoBehaviour
             attack.CastSpecialEffects(target);
         }
 
-        GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
 
         if (attack.Cooldown > 0)
         {
             playerScript.attacksActualCooldown[playerScript.actualAttackIndex] = attack.Cooldown;
         }
 
-        GameManager.Instance.RaisePlayerAttackedEvent();
+        CombatManager.Instance.RaisePlayerAttackedEvent();
     }
 }

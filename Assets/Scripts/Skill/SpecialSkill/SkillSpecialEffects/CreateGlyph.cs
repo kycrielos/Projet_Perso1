@@ -15,7 +15,7 @@ public class CreateGlyph : SpecialEffect
         glyphNode = GridManager.Instance.NodeFromWorldPoint(target.transform.position);
         glyphObj = Instantiate(glyphObjPrefab, glyphNode.worldPosition, Quaternion.identity);
         glyphNode.glyhpScript = glyphObj.GetComponent<GlyphBase>();
-        glyphObj.GetComponent<GlyphBase>().caster = GameManager.Instance.ActualPlayerScript;
-        GameManager.Instance.ActualPlayerScript.possessedGlyph.Add(glyphObj.GetComponent<GlyphBase>());
+        glyphObj.GetComponent<GlyphBase>().caster = CombatManager.Instance.ActualPlayerScript;
+        CombatManager.Instance.ActualPlayerScript.possessedGlyph.Add(glyphObj.GetComponent<GlyphBase>());
     }
 }

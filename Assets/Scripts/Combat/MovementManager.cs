@@ -17,7 +17,7 @@ public class MovementManager : Singleton<MovementManager>
                 yield return null;
             }
         }
-        GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
         GridManager.Instance.UpdateGridState();
     }
 

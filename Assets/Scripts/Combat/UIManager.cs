@@ -14,8 +14,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.StartTurnEvent += TurnStart;
-        GameManager.PlayerAttackedEvent += UpdateAttackSetButtonState;
+        CombatManager.StartTurnEvent += TurnStart;
+        CombatManager.PlayerAttackedEvent += UpdateAttackSetButtonState;
 
         //StartCoroutine(LateStart(0.03f));
     }
@@ -26,22 +26,22 @@ public class UIManager : MonoBehaviour
     }
     public void EndTurn()
     {
-        GameManager.Instance.NextPlayerTurn();
+        CombatManager.Instance.NextPlayerTurn();
     }
 
     public void UIAttackClick(int buttonNumber)
     {
-        if (GameManager.Instance.ActualPlayerState == GameManager.PlayerState.idle)
+        if (CombatManager.Instance.ActualPlayerState == CombatManager.PlayerState.idle)
         {
-            GameManager.Instance.actualPlayerAttack = attackSet[buttonNumber];
-            GameManager.Instance.ActualPlayerScript.actualAttackIndex = buttonNumber;
-            GameManager.Instance.ActualPlayerState = GameManager.PlayerState.isTargeting;
+            CombatManager.Instance.actualPlayerAttack = attackSet[buttonNumber];
+            CombatManager.Instance.ActualPlayerScript.actualAttackIndex = buttonNumber;
+            CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.isTargeting;
         }
     }
 
     public void TurnStart()
     {
-        attackSet = GameManager.Instance.ActualPlayerScript.attackSet;
+        attackSet = CombatManager.Instance.ActualPlayerScript.attackSet;
         for (int i = 0; i < 4; i++)
         {
             if (attackSet[i] != null)
@@ -58,8 +58,8 @@ public class UIManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        paText.text = "Pa : " + GameManager.Instance.ActualPlayerScript.actualActionPoint.ToString();
-        pmText.text = "Pm : " + GameManager.Instance.ActualPlayerScript.actualMovementPoint.ToString();
+        paText.text = "Pa : " + CombatManager.Instance.ActualPlayerScript.actualActionPoint.ToString();
+        pmText.text = "Pm : " + CombatManager.Instance.ActualPlayerScript.actualMovementPoint.ToString();
     }
 
     private void UpdateAttackSetButtonState()
@@ -68,14 +68,14 @@ public class UIManager : MonoBehaviour
         {
             if (attackSet[i] != null)
             {
-                if (attackSet[i].Cost > GameManager.Instance.ActualPlayerScript.actualActionPoint)
+                if (attackSet[i].Cost > CombatManager.Instance.ActualPlayerScript.actualActionPoint)
                 {
                     attackSetButton[i].enabled = false;
                     attackSetButton[i].GetComponent<Image>().color = Color.gray;
                 }
                 else if (attackSet[i].Cooldown > 0)
                 {
-                    if (GameManager.Instance.ActualPlayerScript.attacksActualCooldown[i] > 0)
+                    if (CombatManager.Instance.ActualPlayerScript.attacksActualCooldown[i] > 0)
                     {
                         attackSetButton[i].enabled = false;
                         attackSetButton[i].GetComponent<Image>().color = Color.gray;
@@ -102,6 +102,6 @@ public class UIManager : MonoBehaviour
 
     ~UIManager()
     {
-        GameManager.StartTurnEvent -= TurnStart;
+        CombatManager.StartTurnEvent -= TurnStart;
     }
 }

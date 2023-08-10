@@ -22,23 +22,23 @@ public class ClickDetector : MonoBehaviour
 
     private void Start()
     {
-        player = GameManager.Instance.ActualPlayer;
+        player = CombatManager.Instance.ActualPlayer;
         playerAttack = player.GetComponent<AttackScript>();
         playerScript = player.GetComponent<PersonnageScript>();
     }
 
     void Update()
     {
-        if (player != GameManager.Instance.ActualPlayer)
+        if (player != CombatManager.Instance.ActualPlayer)
         {
-            player = GameManager.Instance.ActualPlayer;
+            player = CombatManager.Instance.ActualPlayer;
             playerAttack = player.GetComponent<AttackScript>();
             playerScript = player.GetComponent<PersonnageScript>();
         }
-        switch (GameManager.Instance.ActualPlayerState)
+        switch (CombatManager.Instance.ActualPlayerState)
         {
             //if the player is in idle it will check for the movement possibilities
-            case GameManager.PlayerState.idle:
+            case CombatManager.PlayerState.idle:
                 if (GetClickedGameObject() != null) //safety (called after the case to minimise runtime)
                 {
                     //setup the pathfinding
@@ -47,14 +47,14 @@ public class ClickDetector : MonoBehaviour
                     //Start the player movement coroutine if the player click on a valid node
                     if (Input.GetMouseButtonDown(0) && MovementManager.Instance.PathCheck(GetClickedGameObject().transform.position))
                     {
-                        GameManager.Instance.ActualPlayerState = GameManager.PlayerState.isMoving;
+                        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.isMoving;
                         StartCoroutine(MovementManager.Instance.MovePersonnage(player, speed));
                     }
                 }
                 break;
 
             //if the player is targeting something with a move it will check for the available target
-            case GameManager.PlayerState.isTargeting:
+            case CombatManager.PlayerState.isTargeting:
                 if (GetClickedGameObject() != null) //safety (called after the case to minimise runtime)
                 {
                     //set the last target node to false
@@ -63,7 +63,7 @@ public class ClickDetector : MonoBehaviour
                         clickedObjNode.IsTarget = false;
                     }
 
-                    if (GameManager.Instance.actualPlayerAttack.AreaEffectType != SkillBase.AeraType.none)
+                    if (CombatManager.Instance.actualPlayerAttack.AreaEffectType != SkillBase.AeraType.none)
                     {
                         if (area != null)
                         {
@@ -81,7 +81,7 @@ public class ClickDetector : MonoBehaviour
                     clickedObjNode = GridManager.Instance.NodeFromWorldPoint(attackTarget.transform.position);
                     clickedObjNode.IsTarget = true;
 
-                    if (GameManager.Instance.actualPlayerAttack.AreaEffectType != SkillBase.AeraType.none)
+                    if (CombatManager.Instance.actualPlayerAttack.AreaEffectType != SkillBase.AeraType.none)
                     {
                         AreaCheck();
                     }
@@ -91,14 +91,14 @@ public class ClickDetector : MonoBehaviour
                     {
                         if (TargetCheck())
                         {
-                            if (GameManager.Instance.actualPlayerAttack.AreaEffectType != SkillBase.AeraType.none)
+                            if (CombatManager.Instance.actualPlayerAttack.AreaEffectType != SkillBase.AeraType.none)
                             {
                                 playerAttack.recastProtection = false;
                                 foreach (GameObject obj in areaTarget)
                                 {
                                     playerAttack.Attack(obj);
                                 }
-                                GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+                                CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
                             }
                             else if (clickedObjNode.player != null)
                             {
@@ -112,7 +112,7 @@ public class ClickDetector : MonoBehaviour
                         else
                         {
                             clickedObjNode.IsTarget = false;
-                            GameManager.Instance.ActualPlayerState = GameManager.PlayerState.idle;
+                            CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
                         }
                         GridManager.Instance.UpdateGridState();
                     }
@@ -130,7 +130,7 @@ public class ClickDetector : MonoBehaviour
         }
 
         // return false if the  node can't be a target for the player actual attack
-        switch (GameManager.Instance.actualPlayerAttack.TargetingType) //0 = everything can be target, 1 = square with a target on it only, 2 = empty square only
+        switch (CombatManager.Instance.actualPlayerAttack.TargetingType) //0 = everything can be target, 1 = square with a target on it only, 2 = empty square only
         {
             case 0:
                 if (clickedObjNode.GroundState != GroundStateEnum.targetablePlayer && clickedObjNode.GroundState != GroundStateEnum.targetable)
@@ -156,7 +156,7 @@ public class ClickDetector : MonoBehaviour
 
         //Attack maximum range calcul
         int actualRange = Mathf.Abs(clickedObjNode.gridX - playerNode.gridX) + Mathf.Abs(clickedObjNode.gridY - playerNode.gridY);
-        if (actualRange <= GameManager.Instance.actualPlayerAttack.Range && actualRange >= GameManager.Instance.actualPlayerAttack.MinimumRange)
+        if (actualRange <= CombatManager.Instance.actualPlayerAttack.Range && actualRange >= CombatManager.Instance.actualPlayerAttack.MinimumRange)
         {
             return true;
         }
@@ -175,10 +175,10 @@ public class ClickDetector : MonoBehaviour
             List<Node> neighbours = new List<Node>();
 
             area.Add(clickedObjNode);
-            switch (GameManager.Instance.actualPlayerAttack.AreaEffectType)
+            switch (CombatManager.Instance.actualPlayerAttack.AreaEffectType)
             {
                 case SkillBase.AeraType.cross:
-                    for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize; i++)
+                    for (int i = 0; i < CombatManager.Instance.actualPlayerAttack.AreaSize; i++)
                     {
                         foreach (Node n in area)
                         {
@@ -188,7 +188,7 @@ public class ClickDetector : MonoBehaviour
                                 {
                                     neighbours.Add(n2);
                                     n2.AreaTarget = true;
-                                    if (n2.player != null && !(n2 == playerNode && !GameManager.Instance.actualPlayerAttack.AreaAffectPlayer))
+                                    if (n2.player != null && !(n2 == playerNode && !CombatManager.Instance.actualPlayerAttack.AreaAffectPlayer))
                                     {
                                         areaTarget.Add(n2.player);
                                     }
@@ -206,7 +206,7 @@ public class ClickDetector : MonoBehaviour
                     }
                     break;
                 case SkillBase.AeraType.star:
-                    for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize; i++)
+                    for (int i = 0; i < CombatManager.Instance.actualPlayerAttack.AreaSize; i++)
                     {
                         foreach (Node n in area)
                         {
@@ -216,7 +216,7 @@ public class ClickDetector : MonoBehaviour
                                 {
                                     neighbours.Add(n2);
                                     n2.AreaTarget = true;
-                                    if (n2.player != null && !(n2 == playerNode && !GameManager.Instance.actualPlayerAttack.AreaAffectPlayer))
+                                    if (n2.player != null && !(n2 == playerNode && !CombatManager.Instance.actualPlayerAttack.AreaAffectPlayer))
                                     {
                                         areaTarget.Add(n2.player);
                                     }
@@ -234,7 +234,7 @@ public class ClickDetector : MonoBehaviour
                     }
                     break;
                 case SkillBase.AeraType.square:
-                    for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize * 2; i++)
+                    for (int i = 0; i < CombatManager.Instance.actualPlayerAttack.AreaSize * 2; i++)
                     {
                         foreach (Node n in area)
                         {
@@ -242,11 +242,11 @@ public class ClickDetector : MonoBehaviour
                             {
                                 if (!neighbours.Contains(n2))
                                 {
-                                    if (Mathf.Abs(n2.gridX - clickedObjNode.gridX) <= GameManager.Instance.actualPlayerAttack.AreaSize && Mathf.Abs(n2.gridY - clickedObjNode.gridY) <= GameManager.Instance.actualPlayerAttack.AreaSize)
+                                    if (Mathf.Abs(n2.gridX - clickedObjNode.gridX) <= CombatManager.Instance.actualPlayerAttack.AreaSize && Mathf.Abs(n2.gridY - clickedObjNode.gridY) <= CombatManager.Instance.actualPlayerAttack.AreaSize)
                                     {
                                         neighbours.Add(n2);
                                         n2.AreaTarget = true;
-                                        if (n2.player != null && !(n2 == playerNode && !GameManager.Instance.actualPlayerAttack.AreaAffectPlayer))
+                                        if (n2.player != null && !(n2 == playerNode && !CombatManager.Instance.actualPlayerAttack.AreaAffectPlayer))
                                         {
                                             areaTarget.Add(n2.player);
                                         }
@@ -265,7 +265,7 @@ public class ClickDetector : MonoBehaviour
                     }
                     break;
                 case SkillBase.AeraType.diagonal:
-                    for (int i = 0; i < GameManager.Instance.actualPlayerAttack.AreaSize * 2; i++)
+                    for (int i = 0; i < CombatManager.Instance.actualPlayerAttack.AreaSize * 2; i++)
                     {
                         foreach (Node n in area)
                         {
@@ -277,7 +277,7 @@ public class ClickDetector : MonoBehaviour
                                     if (Mathf.Abs(n2.gridX - clickedObjNode.gridX) == Mathf.Abs(n2.gridY - clickedObjNode.gridY))
                                     {
                                         n2.AreaTarget = true;
-                                        if (n2.player != null && !(n2 == playerNode && !GameManager.Instance.actualPlayerAttack.AreaAffectPlayer))
+                                        if (n2.player != null && !(n2 == playerNode && !CombatManager.Instance.actualPlayerAttack.AreaAffectPlayer))
                                         {
                                             areaTarget.Add(n2.player);
                                         }

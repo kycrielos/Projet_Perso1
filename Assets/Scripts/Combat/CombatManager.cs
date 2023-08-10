@@ -18,7 +18,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
 }
 
-public class GameManager : Singleton<GameManager>
+public class CombatManager : Singleton<CombatManager>
 {
     public int playingPersonnage;
 
@@ -58,17 +58,22 @@ public class GameManager : Singleton<GameManager>
     //get the playing character
     public GameObject ActualPlayer
     {
-        get {if (playerOrder.Count != 0){ return playerOrder[actualPlayerIndex];}
-             else { return null; }
-            }
+        get
+        {
+            if (playerOrder.Count != 0) { return playerOrder[actualPlayerIndex]; }
+              else { return null; }
+        }
     }
 
 
     //get the playing character script
     public PersonnageScript ActualPlayerScript
     {
-        get { if (ActualPlayer != null) { return ActualPlayer.GetComponent<PersonnageScript>(); }
-              else { return null; } }
+        get 
+        { 
+            if (ActualPlayer != null) { return ActualPlayer.GetComponent<PersonnageScript>(); }
+              else { return null; } 
+        }
     }
 
     public enum PlayerState

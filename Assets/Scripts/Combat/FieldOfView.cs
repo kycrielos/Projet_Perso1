@@ -32,7 +32,7 @@ public class FieldOfView : MonoBehaviour {
 
 		player = GetComponent<PersonnageScript>();
 
-		GameManager.StartTargetingEvent += Starter;
+		CombatManager.StartTargetingEvent += Starter;
 
 		StartCoroutine ("FindTargetsWithDelay", .2f);
 	}
@@ -51,7 +51,7 @@ public class FieldOfView : MonoBehaviour {
 	{
 		if (player.playerturn)
 		{
-			viewRadius = GameManager.Instance.actualPlayerAttack.Range;
+			viewRadius = CombatManager.Instance.actualPlayerAttack.Range;
 			viewCollider.enabled = true;
 			DrawFieldOfView();
 			GridManager.Instance.UpdateGridState();
@@ -220,6 +220,6 @@ public class FieldOfView : MonoBehaviour {
 	}
     ~FieldOfView()
 	{
-		GameManager.StartTargetingEvent -= Starter;
+		CombatManager.StartTargetingEvent -= Starter;
 	}
 }
