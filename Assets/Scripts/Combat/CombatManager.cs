@@ -91,7 +91,7 @@ public class CombatManager : Singleton<CombatManager>
     IEnumerator LateStart(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        playerOrder = (playerOrder.OrderByDescending(player => player.GetComponent<PlayerScript>().personnage.Initiative)).ToList();
+        playerOrder = (playerOrder.OrderByDescending(player => player.GetComponent<PersonnageScript>().personnage.Initiative)).ToList();
         ActualPlayerScript.StartTurn();
         RaiseStartTurnEvent();
     }

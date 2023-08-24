@@ -40,7 +40,7 @@ public abstract class PersonnageScript : MonoBehaviour
 
     bool destroyed;
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         attacksActualCooldown = new int[4];
 

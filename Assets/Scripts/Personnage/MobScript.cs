@@ -6,8 +6,9 @@ public class MobScript : PersonnageScript
 {
     public BaseAI AI;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         isAI = true;
     }
 

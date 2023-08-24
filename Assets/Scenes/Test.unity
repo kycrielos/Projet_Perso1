@@ -690,11 +690,12 @@ GameObject:
   m_Component:
   - component: {fileID: 391272963}
   - component: {fileID: 391272962}
-  - component: {fileID: 391272961}
+  - component: {fileID: 391272964}
+  - component: {fileID: 391272965}
   - component: {fileID: 391272960}
   - component: {fileID: 391272959}
   m_Layer: 8
-  m_Name: Player (4)
+  m_Name: Ai
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -739,44 +740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recastProtection: 0
---- !u!114 &391272961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 391272958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f2d40810f637be44afa3e50a28db7b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  personnage: {fileID: 11400000, guid: 5812dd73121e0c34f997cfa4594cfc6e, type: 2}
-  physicalDamage: 0
-  specialDamage: 0
-  playerturn: 0
-  text: {fileID: 316134624}
-  attackSet:
-  - {fileID: 11400000, guid: 5d33a24963fe3924a80eccfcde71d217, type: 2}
-  - {fileID: 11400000, guid: f02baa1157901bd42bb70c092a5ef196, type: 2}
-  - {fileID: 11400000, guid: 2538ecf68bf965542b9e0c7cffdee5d3, type: 2}
-  - {fileID: 11400000, guid: f4819f2a2e72341499b736615aaaf6de, type: 2}
-  attacksActualCooldown: 
-  actualAttackIndex: 0
-  actualHp: 0
-  actualAtk: 0
-  actualSpeAtk: 0
-  actualDef: 0
-  actualSpeDef: 0
-  actualActionPoint: 0
-  actualMovementPoint: 0
-  bonusPhysicalDamageFix: 0
-  bonusSpecialDamageFix: 0
-  bonusPM: 0
-  bonusPA: 0
-  attachedBuffs: []
-  buffsToClear: []
-  possessedGlyph: []
 --- !u!136 &391272962
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -807,6 +770,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &391272964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391272958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc870892bf6e70c49b111c93a2371ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  personnage: {fileID: 11400000, guid: 5812dd73121e0c34f997cfa4594cfc6e, type: 2}
+  isAI: 0
+  physicalDamage: 0
+  specialDamage: 0
+  playerturn: 0
+  text: {fileID: 316134624}
+  attackSet:
+  - {fileID: 11400000, guid: 5d33a24963fe3924a80eccfcde71d217, type: 2}
+  - {fileID: 11400000, guid: 2538ecf68bf965542b9e0c7cffdee5d3, type: 2}
+  - {fileID: 11400000, guid: f02baa1157901bd42bb70c092a5ef196, type: 2}
+  - {fileID: 11400000, guid: f4819f2a2e72341499b736615aaaf6de, type: 2}
+  attacksActualCooldown: 
+  actualAttackIndex: 0
+  actualHp: 0
+  actualAtk: 0
+  actualSpeAtk: 0
+  actualDef: 0
+  actualSpeDef: 0
+  actualActionPoint: 0
+  actualMovementPoint: 0
+  bonusPhysicalDamageFix: 0
+  bonusSpecialDamageFix: 0
+  bonusPM: 0
+  bonusPA: 0
+  attachedBuffs: []
+  buffsToClear: []
+  possessedGlyph: []
+  AI: {fileID: 391272965}
+--- !u!114 &391272965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391272958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11468586ddf03864cb0baf674e61646e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  attackSet:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &406547480
 GameObject:
   m_ObjectHideFlags: 0
@@ -2154,6 +2175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: 2790525b520bb0c418c2740934a37a48, type: 2}
+  isAI: 0
   physicalDamage: 0
   specialDamage: 0
   playerturn: 0
@@ -2281,6 +2303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: 38b81fba1d7092944b25c05e9c755ccf, type: 2}
+  isAI: 0
   physicalDamage: 0
   specialDamage: 0
   playerturn: 0
@@ -2593,6 +2616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: b09c9a98244e33f4581abf5da256f6ca, type: 2}
+  isAI: 0
   physicalDamage: 0
   specialDamage: 0
   playerturn: 0

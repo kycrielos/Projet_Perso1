@@ -41,19 +41,22 @@ public class UIManager : MonoBehaviour
 
     public void TurnStart()
     {
-        attackSet = CombatManager.Instance.ActualPlayerScript.attackSet;
-        for (int i = 0; i < 4; i++)
+        if (!CombatManager.Instance.ActualPlayerScript.isAI)
         {
-            if (attackSet[i] != null)
+            attackSet = CombatManager.Instance.ActualPlayerScript.attackSet;
+            for (int i = 0; i < 4; i++)
             {
-                attackSetButton[i].GetComponentInChildren<TMP_Text>().text = attackSet[i].SkillName;
+                if (attackSet[i] != null)
+                {
+                    attackSetButton[i].GetComponentInChildren<TMP_Text>().text = attackSet[i].SkillName;
+                }
+                else
+                {
+                    attackSetButton[i].GetComponentInChildren<TMP_Text>().text = null;
+                }
             }
-            else
-            {
-                attackSetButton[i].GetComponentInChildren<TMP_Text>().text = null;
-            }
+            UpdateAttackSetButtonState();
         }
-        UpdateAttackSetButtonState();
     }
 
     private void LateUpdate()
