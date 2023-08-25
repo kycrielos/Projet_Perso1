@@ -29,7 +29,7 @@ public class AgressiveAI : BaseAI
             }
         }
 
-        mobScript.EndTurn();
+        CombatManager.Instance.NextPlayerTurn();
     }
 
     bool AttackCanBeUsed(int attackIndex) 

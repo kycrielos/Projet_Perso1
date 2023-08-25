@@ -83,6 +83,7 @@ public class CombatManager : Singleton<CombatManager>
         isTargeting,
         isAttacking,
         isDying,
+        isAI,
     }
     private void Start()
     {

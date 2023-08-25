@@ -123,7 +123,8 @@ public abstract class PersonnageScript : MonoBehaviour
         {
             playerNode.glyhpScript.TriggerEffect(this);
         }
-        
+
+        Debug.Log("Allo?");
         playerturn = false;
     }
 

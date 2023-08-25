@@ -81,7 +81,10 @@ public class AttackScript : MonoBehaviour
             attack.CastSpecialEffects(target);
         }
 
-        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
+        if (CombatManager.Instance.ActualPlayerState != CombatManager.PlayerState.isAI)
+        {
+            CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
+        }
 
         if (attack.Cooldown > 0)
         {

@@ -15,6 +15,7 @@ public class MobScript : PersonnageScript
     public override void StartTurn() 
     {
         base.StartTurn();
+        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.isAI;
         AI.StartAI();
     }
 }
