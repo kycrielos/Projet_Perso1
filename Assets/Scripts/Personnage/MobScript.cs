@@ -12,10 +12,11 @@ public class MobScript : PersonnageScript
         isAI = true;
     }
 
-    public override void StartTurn() 
+    public override void StartTurn()
     {
+        CombatManager.Instance.isAI = true;
+        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idleAI;
         base.StartTurn();
-        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.isAI;
         AI.StartAI();
     }
 }

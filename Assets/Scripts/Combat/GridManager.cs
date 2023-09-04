@@ -43,7 +43,7 @@ public class GridManager : Singleton<GridManager>
             for (int y = 0; y < gridSizeY; y++)
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
-                if (Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask))
+                if (Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask) || GridBorder(x,y))
                 {
                     _groundtstate = GroundStateEnum.wall;
                     _player = null;
@@ -58,12 +58,21 @@ public class GridManager : Singleton<GridManager>
                     _groundtstate = GroundStateEnum.possible;
                     _player = null;
                 }
-                bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
+                //bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
                 gridObj = Instantiate(gridObjPrefab, new Vector3(x - gridSizexCoeff, 0, y - gridSizeyCoeff), Quaternion.identity);
                 colliderObj = Instantiate(colliderObjPrefab, new Vector3(x - gridSizexCoeff, -0.5f, y - gridSizeyCoeff), Quaternion.identity);
                 grid[x, y] = new Node(_groundtstate, worldPoint, x, y, gridObj, colliderObj, _player);
             }
         }
+    }
+
+    bool GridBorder(int x, int y) 
+    {
+        if (x == 0 || y == 0 || x == gridSizeX - 1 || y == gridSizeY - 1) 
+        {
+            return true;
+        }
+        return false;
     }
 
     public List<Node> GetNeighbours(Node node)
@@ -102,15 +111,13 @@ public class GridManager : Singleton<GridManager>
         return grid[x, y];
     }
 
-    public List<Node> path;
-
     public List<Node> nodeToCheck = new List<Node>();
 
     bool MaxDistanceCheck(Node n)
     {
         PathFinding.Instance.target = n.nodeObj.transform;
         PathFinding.Instance.FindPath(CombatManager.Instance.ActualPlayer.transform.position, n.nodeObj.transform.position);
-        return (path.Count > CombatManager.Instance.ActualPlayerScript.actualMovementPoint);
+        return (PathFinding.Instance.finalPath.Count > CombatManager.Instance.ActualPlayerScript.actualMovementPoint);
     }
     public void UpdateGridState()
     {
@@ -119,7 +126,7 @@ public class GridManager : Singleton<GridManager>
             case CombatManager.PlayerState.idle:
                 foreach (Node n in grid)
                 {
-                    if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
+                    if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask) || GridBorder(n.gridX, n.gridY))
                     {
                         _groundtstate = GroundStateEnum.wall;
                         _player = null;
@@ -167,16 +174,16 @@ public class GridManager : Singleton<GridManager>
                 {
                     Node playerNode = NodeFromWorldPoint(CombatManager.Instance.ActualPlayer.transform.position); //get player Node
                     int actualRange = Mathf.Abs(n.gridX - playerNode.gridX) + Mathf.Abs(n.gridY - playerNode.gridY);
-                    if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask))
+                    if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask) || GridBorder(n.gridX, n.gridY))
                     {
                         _groundtstate = GroundStateEnum.wall;
                         _player = null;
                     }
                     else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
                     {
-                        if (CheckRange(actualRange) && CheckLine(n, playerNode))
+                        if (CheckRange(actualRange, CombatManager.Instance.actualPlayerAttack) && CheckLine(n, playerNode, CombatManager.Instance.actualPlayerAttack))
                         {
-                            if (CheckLineOfSight(n))
+                            if (CheckLineOfSight(n, CombatManager.Instance.actualPlayerAttack))
                             {
                                 _groundtstate = GroundStateEnum.targetablePlayer;
                             }
@@ -192,9 +199,9 @@ public class GridManager : Singleton<GridManager>
                             _player = Physics.OverlapSphere(n.nodeObj.transform.position, nodeRadius, playerMask)[0].gameObject;
                         }
                     }
-                    else if (CheckRange(actualRange) && CheckLine(n, playerNode))
+                    else if (CheckRange(actualRange, CombatManager.Instance.actualPlayerAttack) && CheckLine(n, playerNode, CombatManager.Instance.actualPlayerAttack))
                     {
-                        if (CheckLineOfSight(n))
+                        if (CheckLineOfSight(n, CombatManager.Instance.actualPlayerAttack))
                         {
                             _groundtstate = GroundStateEnum.targetable;
                         }
@@ -213,12 +220,34 @@ public class GridManager : Singleton<GridManager>
                     n.player = _player;
                 }
                 break;
+            case CombatManager.PlayerState.idleAI:
+                foreach (Node n in grid)
+                {
+                    if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, unwalkableMask) || GridBorder(n.gridX, n.gridY))
+                    {
+                        _groundtstate = GroundStateEnum.wall;
+                        _player = null;
+                    }
+                    else if (Physics.CheckSphere(n.nodeObj.transform.position, nodeRadius, playerMask))
+                    {
+                        _groundtstate = GroundStateEnum.player;
+                        _player = Physics.OverlapSphere(n.nodeObj.transform.position, nodeRadius, playerMask)[0].gameObject;
+                    }
+                    else
+                    {
+                        _groundtstate = GroundStateEnum.possible;
+                        _player = null;
+                    }
+                    n.GroundState = _groundtstate;
+                    n.player = _player;
+                }
+                break;
         }
     }
 
-    bool CheckRange(int actualRange)
+    public bool CheckRange(int actualRange, SkillBase attack)
     {
-        if (actualRange <= CombatManager.Instance.actualPlayerAttack.Range && actualRange >= CombatManager.Instance.actualPlayerAttack.MinimumRange)
+        if (actualRange <= attack.Range && actualRange >= attack.MinimumRange)
         {
             return true;
         }
@@ -228,9 +257,9 @@ public class GridManager : Singleton<GridManager>
         }
     }
 
-    bool CheckLine(Node n, Node playerNode)
+    public bool CheckLine(Node n, Node playerNode, SkillBase attack)
     {
-        if (CombatManager.Instance.actualPlayerAttack.InLineOnly)
+        if (attack.InLineOnly)
         {
             if (n.gridX == playerNode.gridX || n.gridY == playerNode.gridY)
             {
@@ -247,9 +276,9 @@ public class GridManager : Singleton<GridManager>
         }
     }
 
-    bool CheckLineOfSight(Node n)
+    public bool CheckLineOfSight(Node n, SkillBase attack)
     {
-        if (CombatManager.Instance.actualPlayerAttack.LineOfSight)
+        if (attack.LineOfSight)
         {
             if (Physics.CheckBox(n.colliderObj.transform.position, n.colliderObj.GetComponent<Collider>().bounds.extents / 2, n.colliderObj.transform.rotation, fieldOfViewMask))
             {

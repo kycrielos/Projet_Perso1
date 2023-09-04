@@ -16,41 +16,44 @@ public class Node
 				player = null;
             }
 
-			//everytime the state change change the color too
-			switch (groundState)
+			if (!CombatManager.Instance.isAI)
 			{
-				case GroundStateEnum.wall:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
-					colliderObj.layer = 11;
-					break;
-				case GroundStateEnum.nothing:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
-					colliderObj.layer = 13;
-					break;
-				case GroundStateEnum.possible:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.green;
-					colliderObj.layer = 13;
-					break;
-				case GroundStateEnum.targetable:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.cyan;
-					colliderObj.layer = 13;
-					break;
-				case GroundStateEnum.targetablePlayer:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.cyan;
-					colliderObj.layer = 13;
-					break;
-				case GroundStateEnum.noView:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.red;
-					colliderObj.layer = 13;
-					break;
-				case GroundStateEnum.player:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.grey;
-					colliderObj.layer = 13;
-					break;
-				default:
-					nodeObj.GetComponent<MeshRenderer>().material.color = Color.grey;
-					colliderObj.layer = 13;
-					break;
+				//everytime the state change change the color too
+				switch (groundState)
+				{
+					case GroundStateEnum.wall:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
+						colliderObj.layer = 13;
+						break;
+					case GroundStateEnum.nothing:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
+						colliderObj.layer = 13;
+						break;
+					case GroundStateEnum.possible:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.green;
+						colliderObj.layer = 13;
+						break;
+					case GroundStateEnum.targetable:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.cyan;
+						colliderObj.layer = 13;
+						break;
+					case GroundStateEnum.targetablePlayer:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.cyan;
+						colliderObj.layer = 13;
+						break;
+					case GroundStateEnum.noView:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.red;
+						colliderObj.layer = 13;
+						break;
+					case GroundStateEnum.player:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.grey;
+						colliderObj.layer = 13;
+						break;
+					default:
+						nodeObj.GetComponent<MeshRenderer>().material.color = Color.grey;
+						colliderObj.layer = 13;
+						break;
+				}
 			}
 		}
 	}
@@ -81,18 +84,21 @@ public class Node
 		{
 			isTarget = value;
 
-			//if the square is targeted change its color
-			if (groundState == GroundStateEnum.targetable || groundState == GroundStateEnum.targetablePlayer)
+			if (!CombatManager.Instance.isAI)
 			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.cyan;
-			}
-			else if (groundState == GroundStateEnum.noView)
-			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(130, 30, 0, 1) : Color.red;
-			}
-			else if(groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
-			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(130, 30, 0, 1) : Color.gray;
+				//if the square is targeted change its color
+				if (groundState == GroundStateEnum.targetable || groundState == GroundStateEnum.targetablePlayer)
+				{
+					nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.cyan;
+				}
+				else if (groundState == GroundStateEnum.noView)
+				{
+					nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(130, 30, 0, 1) : Color.red;
+				}
+				else if (groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
+				{
+					nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(130, 30, 0, 1) : Color.gray;
+				}
 			}
 		}
 	}
@@ -104,18 +110,21 @@ public class Node
 		{
 			areaTarget = value;
 
-			//if the square is targeted change its color
-			if (groundState == GroundStateEnum.targetable || groundState == GroundStateEnum.targetablePlayer)
+			if (!CombatManager.Instance.isAI)
 			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.cyan;
-			}
-			else if (groundState == GroundStateEnum.noView)
-			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.red;
-			}
-			else if (groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
-			{
-				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.gray;
+				//if the square is targeted change its color
+				if (groundState == GroundStateEnum.targetable || groundState == GroundStateEnum.targetablePlayer)
+				{
+					nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.cyan;
+				}
+				else if (groundState == GroundStateEnum.noView)
+				{
+					nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.red;
+				}
+				else if (groundState != GroundStateEnum.wall && groundState != GroundStateEnum.nothing)
+				{
+					nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.gray;
+				}
 			}
 		}
 	}
@@ -129,7 +138,7 @@ public class Node
 			isInPath = value;
 
 			//if the square is in the path change its color
-			if (groundState == GroundStateEnum.possible)
+			if (groundState == GroundStateEnum.possible && !CombatManager.Instance.isAI)
 				nodeObj.GetComponent<MeshRenderer>().material.color = value ? new Color32(252, 185, 65, 1) : Color.green;
 		}
 	}

@@ -7,6 +7,8 @@ public class PathFinding : Singleton<PathFinding>
 	public Transform target;
 	private List<Node> path;
 
+	public List<Node> finalPath;
+
 	void Update()
 	{
 		if (CombatManager.Instance.ActualPlayerState == CombatManager.PlayerState.idle)
@@ -32,7 +34,7 @@ public class PathFinding : Singleton<PathFinding>
 		Node targetNode = GridManager.Instance.NodeFromWorldPoint(targetPos);
 		List<Node> openSet = new List<Node>();
 		HashSet<Node> closedSet = new HashSet<Node>();
-		
+
 		//A* Algorithm :
 
 		openSet.Add(startNode);
@@ -65,7 +67,7 @@ public class PathFinding : Singleton<PathFinding>
 			foreach (Node neighbour in GridManager.Instance.GetNeighbours(node))
 			{
 				//if the adjacent cell is unwalkable or the adjacent cell is in closed list skip to the next adjacent cell
-				if (neighbour.GroundState != GroundStateEnum.possible || closedSet.Contains(neighbour))
+				if ((neighbour.GroundState != GroundStateEnum.possible && AITargetingPlayerCase(neighbour, targetNode)) || closedSet.Contains(neighbour))
 				{
 					continue;
 				}
@@ -84,7 +86,13 @@ public class PathFinding : Singleton<PathFinding>
 						openSet.Add(neighbour);
 				}
 			}
+
 		}
+	}
+
+	bool AITargetingPlayerCase(Node neighbourNode, Node targetNode) 
+	{
+		return !(CombatManager.Instance.isAI && neighbourNode.GroundState == GroundStateEnum.player && neighbourNode == targetNode);
 	}
 
 	//Track back the path
@@ -101,7 +109,11 @@ public class PathFinding : Singleton<PathFinding>
 		}
 		path.Reverse();
 
-		GridManager.Instance.path = path;
+		if (CombatManager.Instance.isAI) 
+		{
+			path.Remove(endNode);
+		}
+		finalPath = path;
 	}
 
 	int GetDistance(Node nodeA, Node nodeB)

@@ -26,7 +26,10 @@ public class UIManager : MonoBehaviour
     }
     public void EndTurn()
     {
-        CombatManager.Instance.NextPlayerTurn();
+        if (!CombatManager.Instance.ActualPlayerScript.isAI)
+        {
+            CombatManager.Instance.NextPlayerTurn();
+        }
     }
 
     public void UIAttackClick(int buttonNumber)

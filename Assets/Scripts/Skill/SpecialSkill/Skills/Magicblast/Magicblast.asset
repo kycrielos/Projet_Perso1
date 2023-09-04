@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 
   powerType: 4
   power: 60
-  range: 13
+  range: 100
   minimumRange: 1
   cost: 6
   cooldown: 0
@@ -28,5 +28,6 @@ MonoBehaviour:
   healIsPourcentHp: 0
   areaEffectType: 0
   areaSize: 0
+  areaAffectPlayer: 0
   effect:
   - {fileID: 11400000, guid: 1677baab98684c645918188a1b219e89, type: 2}

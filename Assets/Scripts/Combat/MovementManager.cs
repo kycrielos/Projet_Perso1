@@ -7,17 +7,31 @@ public class MovementManager : Singleton<MovementManager>
     //Move the player throught the path node per node
     public IEnumerator MovePersonnage(GameObject personnage, float speed)
     {
-        foreach (Node n in GridManager.Instance.path)
+        if (CombatManager.Instance.isAI) 
         {
-            personnage.GetComponent<PersonnageScript>().actualMovementPoint -= 1;
-            while (Vector3.Distance(personnage.transform.position, n.nodeObj.transform.position) > 0.05f)
+            CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.isMovingAI;
+        }
+        foreach (Node n in PathFinding.Instance.finalPath)
+        {
+            if (personnage.GetComponent<PersonnageScript>().actualMovementPoint > 0)
             {
-                float step = speed * Time.deltaTime;
-                personnage.transform.position = Vector3.MoveTowards(personnage.transform.position, n.nodeObj.transform.position, step);
-                yield return null;
+                personnage.GetComponent<PersonnageScript>().actualMovementPoint -= 1;
+                while (Vector3.Distance(personnage.transform.position, n.nodeObj.transform.position) > 0.05f)
+                {
+                    float step = speed * Time.deltaTime;
+                    personnage.transform.position = Vector3.MoveTowards(personnage.transform.position, n.nodeObj.transform.position, step);
+                    yield return null;
+                }
             }
         }
-        CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
+        if (CombatManager.Instance.isAI)
+        {
+            CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.isOnActionAI;
+        }
+        else
+        {
+            CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
+        }
         GridManager.Instance.UpdateGridState();
     }
 

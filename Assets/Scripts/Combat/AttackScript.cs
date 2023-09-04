@@ -24,9 +24,9 @@ public class AttackScript : MonoBehaviour
     {
         attack = CombatManager.Instance.actualPlayerAttack;
 
-        if (target.GetComponent<PlayerScript>() != null)
+        if (target.GetComponent<PersonnageScript>() != null)
         {
-            PersonnageScript targetScript = target.GetComponent<PlayerScript>();
+            PersonnageScript targetScript = target.GetComponent<PersonnageScript>();
 
 
             switch (attack.DamageType)
@@ -34,8 +34,7 @@ public class AttackScript : MonoBehaviour
                 case SkillBase.DamagingType.physical:
                     
                     targetHp = targetScript.actualHp;
-                    targetScript.physicalDamage = (attack.Power * (playerScript.actualAtk + 100) / 100) - attack.Power + playerScript.bonusPhysicalDamageFix;
-                    targetScript.Damaged();
+                    targetScript.Damaged(AttackDamageCalcul(target, attack));
 
                     if (attack.SustainEffect)
                     {
@@ -46,8 +45,7 @@ public class AttackScript : MonoBehaviour
                 case SkillBase.DamagingType.special:
 
                     targetHp = targetScript.actualHp;
-                    targetScript.specialDamage = (attack.Power * (playerScript.actualSpeAtk + 100) / 100) - attack.Power + playerScript.bonusSpecialDamageFix;
-                    targetScript.Damaged();
+                    targetScript.Damaged(AttackDamageCalcul(target, attack));
 
                     if (attack.SustainEffect)
                     {
@@ -81,7 +79,7 @@ public class AttackScript : MonoBehaviour
             attack.CastSpecialEffects(target);
         }
 
-        if (CombatManager.Instance.ActualPlayerState != CombatManager.PlayerState.isAI)
+        if (!CombatManager.Instance.isAI)
         {
             CombatManager.Instance.ActualPlayerState = CombatManager.PlayerState.idle;
         }
@@ -92,5 +90,28 @@ public class AttackScript : MonoBehaviour
         }
 
         CombatManager.Instance.RaisePlayerAttackedEvent();
+    }
+
+    public float AttackDamageCalcul(GameObject target, SkillBase chosenAttack)
+    {
+        float damage;
+
+        if (target.GetComponent<PersonnageScript>() != null)
+        {
+            PersonnageScript targetScript = target.GetComponent<PersonnageScript>();
+
+
+            switch (chosenAttack.DamageType)
+            {
+                case SkillBase.DamagingType.physical:
+                    damage = (chosenAttack.Power * (playerScript.actualAtk + 100) / 100) - chosenAttack.Power + playerScript.bonusPhysicalDamageFix;
+                    return Mathf.Round((damage - targetScript.bonusPhysicalResistanceFix) * (100f / (targetScript.actualDef + 100f)));
+
+                case SkillBase.DamagingType.special:
+                    damage = (chosenAttack.Power * (playerScript.actualSpeAtk + 100) / 100) - chosenAttack.Power + playerScript.bonusSpecialDamageFix;
+                    return Mathf.Round((damage - targetScript.bonusSpecialResistanceFix) * (100f / (targetScript.actualSpeDef + 100f)));
+            }
+        }
+        return 0; //default value;
     }
 }

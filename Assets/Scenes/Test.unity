@@ -720,7 +720,7 @@ MonoBehaviour:
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2304
   visibleTargets: []
   meshResolution: 10
   edgeResolveIterations: 0
@@ -784,8 +784,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: 5812dd73121e0c34f997cfa4594cfc6e, type: 2}
   isAI: 0
-  physicalDamage: 0
-  specialDamage: 0
   playerturn: 0
   text: {fileID: 316134624}
   attackSet:
@@ -804,6 +802,8 @@ MonoBehaviour:
   actualMovementPoint: 0
   bonusPhysicalDamageFix: 0
   bonusSpecialDamageFix: 0
+  bonusPhysicalResistanceFix: 0
+  bonusSpecialResistanceFix: 0
   bonusPM: 0
   bonusPA: 0
   attachedBuffs: []
@@ -1620,7 +1620,7 @@ GameObject:
   - component: {fileID: 809611845}
   - component: {fileID: 809611844}
   - component: {fileID: 809611843}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1699,7 +1699,7 @@ Transform:
   m_GameObject: {fileID: 809611842}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.36, y: 0.49, z: -2.5}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 0.9, y: 2.06316, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2142,7 +2142,7 @@ MonoBehaviour:
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2304
   visibleTargets: []
   meshResolution: 10
   edgeResolveIterations: 0
@@ -2176,8 +2176,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: 2790525b520bb0c418c2740934a37a48, type: 2}
   isAI: 0
-  physicalDamage: 0
-  specialDamage: 0
   playerturn: 0
   text: {fileID: 416516339}
   attackSet:
@@ -2196,6 +2194,8 @@ MonoBehaviour:
   actualMovementPoint: 0
   bonusPhysicalDamageFix: 0
   bonusSpecialDamageFix: 0
+  bonusPhysicalResistanceFix: 0
+  bonusSpecialResistanceFix: 0
   bonusPM: 0
   bonusPA: 0
   attachedBuffs: []
@@ -2211,7 +2211,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1.3
   m_Height: 2.1
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -2270,7 +2270,7 @@ MonoBehaviour:
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2304
   visibleTargets: []
   meshResolution: 10
   edgeResolveIterations: 0
@@ -2304,8 +2304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: 38b81fba1d7092944b25c05e9c755ccf, type: 2}
   isAI: 0
-  physicalDamage: 0
-  specialDamage: 0
   playerturn: 0
   text: {fileID: 625233837}
   attackSet:
@@ -2324,6 +2322,8 @@ MonoBehaviour:
   actualMovementPoint: 0
   bonusPhysicalDamageFix: 0
   bonusSpecialDamageFix: 0
+  bonusPhysicalResistanceFix: 0
+  bonusSpecialResistanceFix: 0
   bonusPM: 0
   bonusPA: 0
   attachedBuffs: []
@@ -2371,7 +2371,7 @@ GameObject:
   - component: {fileID: 1036900977}
   - component: {fileID: 1036900976}
   - component: {fileID: 1036900975}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2450,7 +2450,7 @@ Transform:
   m_GameObject: {fileID: 1036900974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.51, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.8008, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2468,7 +2468,7 @@ GameObject:
   - component: {fileID: 1049337418}
   - component: {fileID: 1049337417}
   - component: {fileID: 1049337416}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2547,7 +2547,7 @@ Transform:
   m_GameObject: {fileID: 1049337415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 0.49, z: 3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.5708, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2583,7 +2583,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1.3
   m_Height: 2.1
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -2617,8 +2617,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personnage: {fileID: 11400000, guid: b09c9a98244e33f4581abf5da256f6ca, type: 2}
   isAI: 0
-  physicalDamage: 0
-  specialDamage: 0
   playerturn: 0
   text: {fileID: 459730258}
   attackSet:
@@ -2637,6 +2635,8 @@ MonoBehaviour:
   actualMovementPoint: 0
   bonusPhysicalDamageFix: 0
   bonusSpecialDamageFix: 0
+  bonusPhysicalResistanceFix: 0
+  bonusSpecialResistanceFix: 0
   bonusPM: 0
   bonusPA: 0
   attachedBuffs: []
@@ -2674,7 +2674,7 @@ MonoBehaviour:
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2304
   visibleTargets: []
   meshResolution: 10
   edgeResolveIterations: 0
@@ -2919,7 +2919,7 @@ GameObject:
   - component: {fileID: 1335742930}
   - component: {fileID: 1335742929}
   - component: {fileID: 1335742928}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2998,7 +2998,7 @@ Transform:
   m_GameObject: {fileID: 1335742927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.5, y: 0.49, z: -2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.9834, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4142,7 +4142,7 @@ GameObject:
   - component: {fileID: 1621867141}
   - component: {fileID: 1621867140}
   - component: {fileID: 1621867139}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4804,7 +4804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unwalkableMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2560
   playerMask:
     serializedVersion: 2
     m_Bits: 256

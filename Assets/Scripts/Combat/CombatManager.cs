@@ -22,6 +22,8 @@ public class CombatManager : Singleton<CombatManager>
 {
     public int playingPersonnage;
 
+    public bool isAI;
+
     PlayerState actualPlayerState;
     public PlayerState ActualPlayerState
     {
@@ -83,7 +85,9 @@ public class CombatManager : Singleton<CombatManager>
         isTargeting,
         isAttacking,
         isDying,
-        isAI,
+        idleAI,
+        isOnActionAI,
+        isMovingAI,
     }
     private void Start()
     {
