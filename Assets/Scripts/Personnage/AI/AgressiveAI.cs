@@ -179,7 +179,7 @@ public class AgressiveAI : BaseAI
                 if (GridManager.Instance.CheckLineOfSight(n, attack))
                 {
                     PathFinding.Instance.FindPath(transform.position, n.worldPosition);
-                    if (PathFinding.Instance.finalPath.Count <= mobScript.actualMovementPoint) 
+                    if (PathFinding.Instance.finalPath.Count <= mobScript.actualMovementPoint)
                     {
                         return true;
                     }

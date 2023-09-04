@@ -720,7 +720,7 @@ MonoBehaviour:
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 2048
   visibleTargets: []
   meshResolution: 10
   edgeResolveIterations: 0
@@ -750,7 +750,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1.3
   m_Height: 2.1
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -782,15 +782,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc870892bf6e70c49b111c93a2371ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personnage: {fileID: 11400000, guid: 5812dd73121e0c34f997cfa4594cfc6e, type: 2}
-  isAI: 0
+  personnage: {fileID: 11400000, guid: f788622029527254aa78fea62f865c32, type: 2}
+  isAI: 1
   playerturn: 0
   text: {fileID: 316134624}
   attackSet:
-  - {fileID: 11400000, guid: 5d33a24963fe3924a80eccfcde71d217, type: 2}
-  - {fileID: 11400000, guid: 2538ecf68bf965542b9e0c7cffdee5d3, type: 2}
-  - {fileID: 11400000, guid: f02baa1157901bd42bb70c092a5ef196, type: 2}
-  - {fileID: 11400000, guid: f4819f2a2e72341499b736615aaaf6de, type: 2}
+  - {fileID: 11400000, guid: e552ee671edcaf348924e4b2945d0b1d, type: 2}
+  - {fileID: 11400000, guid: 99d09558f0febea438b3e616a2c706af, type: 2}
+  - {fileID: 11400000, guid: e954aeccc0da41748964ce4f5520d085, type: 2}
+  - {fileID: 11400000, guid: 5b115bef49c478046bc7fd69aff570bb, type: 2}
   attacksActualCooldown: 
   actualAttackIndex: 0
   actualHp: 0
@@ -2339,7 +2339,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1.3
   m_Height: 2.1
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}

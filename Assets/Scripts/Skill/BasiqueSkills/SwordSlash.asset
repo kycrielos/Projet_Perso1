@@ -16,11 +16,11 @@ MonoBehaviour:
   description: 
   powerType: 6
   power: 70
-  range: 1
-  minimumRange: 1
+  range: 2
+  minimumRange: 0
   cost: 3
   cooldown: 0
-  lineOfSight: 1
+  lineOfSight: 0
   inLineOnly: 0
   targetingType: 1
   damageType: 1
@@ -28,4 +28,5 @@ MonoBehaviour:
   healIsPourcentHp: 0
   areaEffectType: 0
   areaSize: 0
+  areaAffectPlayer: 0
   effect: []

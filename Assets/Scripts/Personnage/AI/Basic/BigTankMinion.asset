@@ -15,14 +15,14 @@ MonoBehaviour:
   personnageName: 
   description: 
   personnagePowerType: 1
-  maxHp: 0
-  atk: 0
-  speAtk: 0
-  def: 0
-  speDef: 0
-  movementPoint: 0
-  actionPoint: 0
-  initiative: 0
+  maxHp: 800
+  atk: 80
+  speAtk: 10
+  def: 140
+  speDef: 120
+  movementPoint: 5
+  actionPoint: 10
+  initiative: 100
   bonusPhysicalDamageFix: 0
   bonusSpecialDamageFix: 0
   bonusPhysicalResistanceFix: 0
