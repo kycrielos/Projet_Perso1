@@ -23,7 +23,7 @@ public class Node
 				{
 					case GroundStateEnum.wall:
 						nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
-						colliderObj.layer = 13;
+						colliderObj.layer = 11;
 						break;
 					case GroundStateEnum.nothing:
 						nodeObj.GetComponent<MeshRenderer>().material.color = Color.black;
